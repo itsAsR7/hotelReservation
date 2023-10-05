@@ -1,14 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect} from 'react';
 import { View, TextInput, Button, StyleSheet } from 'react-native';
 import { auth } from '../dbConfig';
 import { useNavigation } from '@react-navigation/native';
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const navigation = useNavigation();
+
+
+
+
+
 
   const handleLogin = async () => {
     try {

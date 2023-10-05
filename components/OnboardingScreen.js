@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 
 const OnboardingScreen = ({ navigation }) => {
   const handleLogin = () => {
@@ -12,19 +12,20 @@ const OnboardingScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.heading}>Welcome to My Hotel App</Text>
+      <Image
+        style={styles.logo}
+        source={require('../assets/HotelAppLogo.png')}
+      />
+      <Text style={styles.heading}>My Hotel App</Text>
+
       <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={styles.buttonLogin}
-          onPress={handleLogin}
-        >
+        <TouchableOpacity style={styles.buttonLogin} onPress={handleLogin}>
           <Text style={[styles.buttonText, styles.buttonTextLogin]}>Login</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.buttonSignup}
-          onPress={handleSignup}
-        >
-          <Text style={[styles.buttonText, styles.buttonTextSignup]}>Signup</Text>
+        <TouchableOpacity style={styles.buttonSignup} onPress={handleSignup}>
+          <Text style={[styles.buttonText, styles.buttonTextSignup]}>
+            Signup
+          </Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -41,6 +42,7 @@ const styles = StyleSheet.create({
   heading: {
     fontSize: 24,
     marginBottom: 30,
+    marginTop:30
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -67,7 +69,11 @@ const styles = StyleSheet.create({
   buttonTextSignup: {
     color: '#000', // Text color for Signup button
   },
+  logo: {
+    height: 200,
+    width: 200,
+    borderRadius:100
+  },
 });
-
 
 export default OnboardingScreen;
