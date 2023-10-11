@@ -27,7 +27,7 @@ const BottomTabNav = () => {
     <Tab.Navigator
       initialRouteName="Search"
       activeColor="#Eb6A58"
-      tabBarHideKeyBoard={true}
+      tabBarHideKeyBoard={false}
       headerShown={false}
       inactiveColor="#3e2465"
       barStyle={{ paddingBottom: 48 }}
