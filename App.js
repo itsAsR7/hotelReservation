@@ -1,10 +1,11 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import OnboardingScreen from './components/OnboardingScreen';
 import LoginScreen from './screens/LoginScreen';
 import SignupScreen from './screens/SignupScreen';
-import SearchScreen from './screens/SearchScreen';
+
+import BottomTabNav from './navigation/BottomTabNav';
 
 const Stack = createNativeStackNavigator();
 
@@ -15,11 +16,10 @@ const App = () => {
         <Stack.Screen name="Onboarding" component={OnboardingScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Signup" component={SignupScreen} />
-        <Stack.Screen name="Search" component={SearchScreen} />
+        <Stack.Screen name="Bottom" component={BottomTabNav} />
       </Stack.Navigator>
     </NavigationContainer>
   );
 };
 
 export default App;
-

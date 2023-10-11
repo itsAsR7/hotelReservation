@@ -23,7 +23,7 @@ const LoginScreen = () => {
         password
       );
       console.log(`User ${auth.currentUser?.uid} logged in`);
-      navigation.navigate('Search');
+      navigation.navigate('Bottom');
     } catch (err) {
       console.log(`Error when signing in user: ${err}`);
       alert("Login Error");
