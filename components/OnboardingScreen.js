@@ -16,7 +16,7 @@ const OnboardingScreen = ({ navigation }) => {
         style={styles.logo}
         source={require('../assets/HotelAppLogo.png')}
       />
-      <Text style={styles.heading}>My Hotel App</Text>
+      <Text style={styles.heading}>CosyStay</Text>
 
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.buttonLogin} onPress={handleLogin}>
