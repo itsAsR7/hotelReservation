@@ -3,10 +3,10 @@ import React from 'react'
 
 const Location = () => {
   return (
-    <View>
-      <Text>Location</Text>
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>Location Screen</Text>
     </View>
-  )
+  );
 }
 
 export default Location

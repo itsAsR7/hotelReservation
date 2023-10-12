@@ -3,10 +3,10 @@ import React from 'react'
 
 const Favourite = () => {
   return (
-    <View>
-      <Text>Favourite</Text>
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>Favourite Screen</Text>
     </View>
-  )
+  );
 }
 
 export default Favourite
