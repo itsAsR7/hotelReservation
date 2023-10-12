@@ -25,6 +25,7 @@ const App = () => {
           component={BottomTabNav}
           options={{ headerShown: false }}
         />
+        
       </Stack.Navigator>
     </NavigationContainer>
   );
