@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, StyleSheet } from 'react-native';
+import { View, TextInput, Button, StyleSheet, TouchableOpacity, Text } from 'react-native';
 import { auth } from '../dbConfig';
 import { useNavigation } from '@react-navigation/native';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
@@ -41,7 +41,10 @@ const SignupScreen = ( ) => {
         onChangeText={setPassword}
         secureTextEntry
       />
-      <Button title="Sign Up" onPress={handleSignup} />
+      
+      <TouchableOpacity onPress={handleSignup} style={styles.btn}>
+        <Text style={styles.btnTxt}>Sign Up</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -49,17 +52,34 @@ const SignupScreen = ( ) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+
     padding: 16,
+    backgroundColor: '#fefae0', // Background color
   },
   input: {
     width: '100%',
     marginBottom: 10,
     padding: 10,
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: '#333',
     borderRadius: 5,
+  },
+  btn: {
+    backgroundColor: '#e76f51',
+    borderRadius: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 55,
+    marginTop: 35,
+  },
+  btnTxt: {
+    fontSize: 18,
+    color: '#fff',
+    fontWeight: 'bold',
+    alignSelf: 'center',
+    textTransform: 'uppercase',
   },
 });
 

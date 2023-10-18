@@ -13,7 +13,8 @@ const Tab = createBottomTabNavigator();
 
 const tabBarStyle = {
   padding: 10,
-  paddingBottom:10,
+  paddingBottom: 10,
+
   borderRadius: 20,
   height: 70,
   position: 'absolute',
@@ -84,7 +85,7 @@ const BottomTabNav = () => {
           tabBarStyle: tabBarStyle,
           tabBarShowLabel: false,
           headerShown: false,
-          tabBarIcon: ({focused}) => (
+          tabBarIcon: ({ focused }) => (
             <Ionicons
               name="person-circle"
               size={35}
