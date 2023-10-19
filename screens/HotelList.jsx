@@ -6,6 +6,7 @@ import { FlatList } from 'react-native';
 import ResuseTile from '../components/ResuseTile';
 import { getHotels } from '../services/apiservice';
 import HotelDetails from './HotelDetails';
+import { useState, useEffect } from 'react';
 
 const HotelList = ({ navigation }) => {
   const [hotels, setHotels] = useState([]);
@@ -15,7 +16,7 @@ const HotelList = ({ navigation }) => {
       try {
         const hotelsData = await getHotels();
         setHotels(hotelsData);
-        console.log(hotelsData)
+        console.log(hotelsData);
       } catch (error) {
         console.error('Error fetching hotels:', error);
       }
@@ -24,13 +25,17 @@ const HotelList = ({ navigation }) => {
     fetchHotels();
   }, []);
 
+  const onListItemPressed = (hotel) => {
+    navigation.navigate('HotelDetails', { hotel: hotel });
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={{ height: 50 }}>
         <AppBar
-        top={10}
-        left={0}
-        right={0}
+          top={10}
+          left={0}
+          right={0}
           titleText={'Hotel List'}
           icon={'search'}
           onPress={() => navigation.goBack()}
@@ -38,16 +43,13 @@ const HotelList = ({ navigation }) => {
         />
       </View>
       <View style={{ paddingTop: 20 }}>
-      <FlatList
-        data={hotels}
-        keyExtractor={(item) => item._id}
-        renderItem={({ item }) => (
-          <ResuseTile
-            item={item}
-            onPress={() => navigation.navigate('HotelDetails', item._id)}
-          />
-        )}
-      />
+        <FlatList
+          data={hotels}
+          keyExtractor={(item) => item.hotel_id}
+          renderItem={({ item }) => (
+            <ResuseTile item={item} onPress={() => onListItemPressed(item)} />
+          )}
+        />
       </View>
     </SafeAreaView>
   );
