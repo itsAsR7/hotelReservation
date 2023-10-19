@@ -8,15 +8,16 @@ const HotelCard = ({ item, margin, onPress }) => {
       <View style={styles.card(margin)}>
         <View style={styles.imgcon}>
           <Image
-            source={{ uri: item.imageUrl }}
+            source={{ uri: item.photo1 }}
             width={150}
             height={120}
             borderRadius={16}
           />
         </View>
         <View style={{alignItems:'flex-start',marginStart:20, marginTop:20}} >
-          <Text>{item.title}</Text>
-          <Text>{item.location}</Text>
+          <Text>{item.hotel_name}</Text>
+          <Text>{item.city}</Text>
+          <Text>{item.country}</Text>
         </View>
       </View>
     </TouchableOpacity>
