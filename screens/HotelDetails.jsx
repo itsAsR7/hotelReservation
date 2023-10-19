@@ -9,34 +9,11 @@ import { TouchableOpacity } from 'react-native';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-const HotelDetails = ({ navigation }) => {
-  const hotel = {
-    availability: {
-      start: '2023-08-20T00:00:00.000Z',
-      end: '2023-08-25T00:00:00.000Z',
-    },
-    _id: '64c675793cfa5e847bcd5436',
-    country_id: '64c62bfc65af9f8c969a8d04',
-    title: 'Hotel Midtown Toronto',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Mauris sit amet massa vitae tortor condimentum lacinia quis. Elit ut aliquam purus sit amet luctus. Nunc mi ipsum faucibus vitae aliquet. Et magnis dis parturient montes nascetur ridiculus mus mauris. Vel fringilla est ullamcorper eget nulla facilisi.',
-    contact: '64c5d95adc7efae2a45ec376',
-    imageUrl:
-      'https://images.unsplash.com/photo-1444201983204-c43cbd584d93?auto=format&fit=crop&q=80&w=2070&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    rating: 4.8,
-    review: '6523 Reviews',
-    location: 'Toronto, ON',
-    latitude: 37.7749,
-    longitude: -122.4194,
-    price: 650,
-    facilities: [
-      {
-        wifi: true,
-        _id: '64c675793cfa5e847bcd5437',
-      },
-    ],
-    __v: 0,
-  };
+const HotelDetails = ({ route, navigation }) => {
+
+  const { hotel } = route.params;
+
+  console.log(hotel)
 
   return (
     <ScrollView>
@@ -45,7 +22,7 @@ const HotelDetails = ({ navigation }) => {
           top={50}
           left={20}
           right={20}
-          titleText={hotel.title}
+          titleText={hotel.hotel_name}
           icon={'search'}
           onPress={() => navigation.goBack()}
           onPress1={() => navigation.navigate('Bottom')}
@@ -53,7 +30,7 @@ const HotelDetails = ({ navigation }) => {
       </View>
       <View style={styles.container}>
         <Image
-          source={{ uri: hotel.imageUrl }}
+          source={{ uri: hotel.photo1 }}
           width={windowWidth - 20}
           height={220}
           borderRadius={24}
@@ -66,7 +43,7 @@ const HotelDetails = ({ navigation }) => {
                 fontWeight: '600',
               }}
             >
-              {hotel.title}
+              {hotel.hotel_name}
             </Text>
             <Text
               style={{
@@ -74,14 +51,14 @@ const HotelDetails = ({ navigation }) => {
                 fontWeight: '500',
               }}
             >
-              {hotel.location}
+              {hotel.city}
             </Text>
             <View
               style={{ justifyContent: 'space-between', flexDirection: 'row' }}
             >
               <Rating
                 maxStars={5}
-                stars={hotel.rating}
+                stars={hotel.star_rating}
                 bordered={false}
                 color={'#fd9942'}
               />
@@ -93,7 +70,7 @@ const HotelDetails = ({ navigation }) => {
                   color: 'grey',
                 }}
               >
-                {` (${hotel.review})`}
+                {` (${hotel.number_of_reviews})`}
               </Text>
             </View>
           </View>
@@ -104,7 +81,7 @@ const HotelDetails = ({ navigation }) => {
           <TextInput
             multiline={true}
             numberOfLines={8}
-            value={hotel.description}
+            value={hotel.overview}
           />
         </View>
 
@@ -115,7 +92,7 @@ const HotelDetails = ({ navigation }) => {
           ]}
         >
           <View>
-            <Text style={{ fontSize: 24 }}>{`\$ ${hotel.price}`}</Text>
+            <Text style={{ fontSize: 24 }}>{`\$ ${hotel.rates_from}`}</Text>
             <Text style={{ fontSize: 16, color:'gray' }}>Jan 01- Feb 12</Text>
           </View>
           <View>
