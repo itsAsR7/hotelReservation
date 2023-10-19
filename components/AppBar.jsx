@@ -3,15 +3,25 @@ import React from 'react';
 import { FontAwesome } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native';
 
-const AppBar = ({ color, titleText, color1, icon, onPress, onPress1 }) => {
+const AppBar = ({
+  color,
+  titleText,
+  color1,
+  icon,
+  onPress,
+  onPress1,
+  top,
+  left,
+  right,
+}) => {
   return (
-    <View style={styles.overlay}>
+    <View style={styles.overlay(top, left, right)}>
       <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-        <TouchableOpacity style={styles.box(color)} onPress={onPress} >
+        <TouchableOpacity style={styles.box(color)} onPress={onPress}>
           <FontAwesome name="arrow-left" size={24} color="black" />
         </TouchableOpacity>
-        <Text style={{fontWeight:'700', fontSize:21}} >{titleText}</Text>
-        <TouchableOpacity style={styles.box1(color1)} onPress={onPress1} >
+        <Text style={{ fontWeight: '700', fontSize: 21 }}>{titleText}</Text>
+        <TouchableOpacity style={styles.box1(color1)} onPress={onPress1}>
           <FontAwesome name={icon} size={24} color="black" />
         </TouchableOpacity>
       </View>
@@ -22,13 +32,13 @@ const AppBar = ({ color, titleText, color1, icon, onPress, onPress1 }) => {
 export default AppBar;
 
 const styles = StyleSheet.create({
-  overlay: {
+  overlay: (top, left, right) => ({
     position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
+    top: top,
+    left: left,
+    right: right,
     justifyContent: 'center',
-  },
+  }),
   box: (color) => ({
     backgroundColor: color,
     width: 30,

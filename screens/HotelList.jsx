@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import AppBar from '../components/AppBar';
 import { FlatList } from 'react-native';
 import ResuseTile from '../components/ResuseTile';
+import HotelDetails from './HotelDetails';
 
 const HotelList = ({ navigation }) => {
   const hotels = [
@@ -63,6 +64,9 @@ const HotelList = ({ navigation }) => {
     <SafeAreaView style={styles.container}>
       <View style={{ height: 50 }}>
         <AppBar
+        top={10}
+        left={0}
+        right={0}
           titleText={'Hotel List'}
           icon={'search'}
           onPress={() => navigation.goBack()}
@@ -73,7 +77,12 @@ const HotelList = ({ navigation }) => {
         <FlatList
           data={hotels}
           keyExtractor={(item) => item._id}
-          renderItem={({ item }) => <ResuseTile item={item} />}
+          renderItem={({ item }) => (
+            <ResuseTile
+              item={item}
+              onPress={() => navigation.navigate('HotelDetails', item._id)}
+            />
+          )}
         />
       </View>
     </SafeAreaView>
