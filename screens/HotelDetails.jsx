@@ -13,8 +13,6 @@ const HotelDetails = ({ route, navigation }) => {
 
   const { hotel } = route.params;
 
-  console.log(hotel)
-
   return (
     <ScrollView>
       <View style={{ height: 100 }}>
@@ -82,6 +80,7 @@ const HotelDetails = ({ route, navigation }) => {
             multiline={true}
             numberOfLines={8}
             value={hotel.overview}
+            editable={false}
           />
         </View>
 
