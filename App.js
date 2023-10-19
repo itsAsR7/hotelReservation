@@ -8,6 +8,7 @@ import SignupScreen from './screens/SignupScreen';
 import BottomTabNav from './navigation/BottomTabNav';
 import HotelDetails from './screens/HotelDetails';
 import HotelList from './screens/HotelList';
+import Search from './screens/Search';
 
 
 const Stack = createNativeStackNavigator();
@@ -26,6 +27,11 @@ const App = () => {
         <Stack.Screen
           name="Bottom"
           component={BottomTabNav}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Search"
+          component={Search}
           options={{ headerShown: false }}
         />
         <Stack.Screen
