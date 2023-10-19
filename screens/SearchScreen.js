@@ -1,12 +1,18 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
+import HotelsList from '../components/HotelsList';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
 
 const SearchScreen = () => {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Search Screen</Text>
+    <SafeAreaView style={{ flex: 1, margin:5 }}>
+      <Text></Text>
+
       
-    </View>
+
+      <HotelsList />
+    </SafeAreaView>
   );
 };
 

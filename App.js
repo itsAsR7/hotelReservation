@@ -6,6 +6,8 @@ import LoginScreen from './screens/LoginScreen';
 import SignupScreen from './screens/SignupScreen';
 
 import BottomTabNav from './navigation/BottomTabNav';
+import HotelDetails from './screens/HotelDetails';
+import HotelList from './screens/HotelList';
 
 
 const Stack = createNativeStackNavigator();
@@ -26,7 +28,16 @@ const App = () => {
           component={BottomTabNav}
           options={{ headerShown: false }}
         />
-        
+        <Stack.Screen
+          name="HotelDetails"
+          component={HotelDetails}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="HotelList"
+          component={HotelList}
+          options={{ headerShown: false }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
