@@ -23,7 +23,7 @@ const HotelDetails = ({ route, navigation }) => {
   }, []);
 
   const checkIfFavorite = async () => {
-    const isFavoriteInFirebase = await checkIfHotelIsFavorite(hotel.hotel_name);
+    const isFavoriteInFirebase = await checkIfHotelIsFavorite(hotel.hotelId);
 
     setIsFavorite(isFavoriteInFirebase);
   };
@@ -41,7 +41,7 @@ const HotelDetails = ({ route, navigation }) => {
       ratesFrom: hotel.rates_from,
     };
     if (isFavorite) {
-      await removeFavorite(hotel.hotel_name);
+      await removeFavorite(hotel.hotelId);
       setIsFavorite(false); // Update the state immediately
     } else {
       await addFavorite(hotelData);

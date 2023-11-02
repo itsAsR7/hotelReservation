@@ -73,11 +73,11 @@ const getAllFavorites = async () => {
   };
   
 
-const checkIfHotelIsFavorite = async (hotelName) => {
+const checkIfHotelIsFavorite = async (hotelId) => {
     try {
       const q = query(
         collection(db, 'favorite'),
-        where('hotelName', '==', hotelName)
+        where('hotelId', '==', hotelId)
       );
   
       const querySnapshot = await getDocs(q);
@@ -124,7 +124,7 @@ const addFavorite = async (hotel) => {
     }
   };
 
-  const removeFavorite = async (hotelName) => {
+  const removeFavorite = async (hotelId) => {
     try {
       console.log(
         `Removing favorite from Favorites with user uid [${auth.currentUser.uid}]`
@@ -133,7 +133,7 @@ const addFavorite = async (hotel) => {
       // Query the "favorite" collection to find the document with matching hotelName
       const q = query(
         collection(db, 'favorite'),
-        where('hotelName', '==', hotelName)
+        where('hotelId', '==', hotelId)
       );
   
       const querySnapshot = await getDocs(q);
