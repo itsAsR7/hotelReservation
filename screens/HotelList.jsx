@@ -1,12 +1,11 @@
 import { StyleSheet, Text, View } from 'react-native';
-import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AppBar from '../components/AppBar';
 import { FlatList } from 'react-native';
 import ResuseTile from '../components/ResuseTile';
 import { getHotels } from '../services/apiservice';
 import HotelDetails from './HotelDetails';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const HotelList = ({ navigation }) => {
   const [hotels, setHotels] = useState([]);

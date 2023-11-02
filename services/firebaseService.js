@@ -45,31 +45,33 @@ const logout = async () => {
 };
 
 const getAllFavorites = async () => {
-  try {
-    const allListings = [];
-    const q = query(
-      collection(db, 'bookings'),
-      where("ownerUid", "==", auth.currentUser.uid)
-    );
-
-    const listingSnap = await getDocs(q)
-    
-    listingSnap.forEach((doc) => {
-      const listing = {
-        listingId: doc.id,
-        ...doc.data(),
-      };
-      allListings.push(listing);
-    });
-
-    console.debug(`All listings retrieved. Count: ${allListings.length}`)
-
-    return allListings;
-  } catch (err) {
-    console.log(`Error when getting all listings: ${err}`);
-    return [];
-  }
-};
+    try {
+      const allFavorites = [];
+      const q = query(
+        collection(db, 'favorite'), 
+        where("ownerUid", "==", auth.currentUser.uid)
+      );
+  
+      const favoriteSnap = await getDocs(q)
+      
+      favoriteSnap.forEach((doc) => {
+        const favorite = {
+          favoriteId: doc.id, 
+          ...doc.data(),
+        };
+        console.log(favorite)
+        allFavorites.push(favorite);
+      });
+  
+      console.debug(`All favorites retrieved. Count: ${allFavorites.length}`)
+  
+      return allFavorites;
+    } catch (err) {
+      console.log(`Error when getting all favorites: ${err}`);
+      return [];
+    }
+  };
+  
 
 const checkIfHotelIsFavorite = async (hotelName) => {
     try {
@@ -98,8 +100,12 @@ const addFavorite = async (hotel) => {
       const favoriteCollection = collection(db, 'favorite');
   
       const hotelData = {
+        ownerUid: auth.currentUser.uid,
+        hotelId: hotel.hotelId,
         hotelName: hotel.hotelName,
         city: hotel.city,
+        country: hotel.country,
+        photo1: hotel.photo1,
         starRating: hotel.starRating,
         numberOfReviews: hotel.numberOfReviews,
         overview: hotel.overview,

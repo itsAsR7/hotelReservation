@@ -7,6 +7,7 @@ import { ScrollView } from 'react-native';
 import { Rating } from 'react-native-stock-star-rating';
 import { Dimensions } from 'react-native';
 import { TouchableOpacity } from 'react-native';
+import { auth } from "../dbConfig";
 import { addFavorite, checkIfHotelIsFavorite, removeFavorite } from '../services/firebaseService';
 
 const windowWidth = Dimensions.get('window').width;
@@ -29,8 +30,11 @@ const HotelDetails = ({ route, navigation }) => {
 
   const toggleFavorite = async () => {
     const hotelData = {
+      hotelId: hotel.hotel_id,
       hotelName: hotel.hotel_name,
+      photo1: hotel.photo1,
       city: hotel.city,
+      country: hotel.country,
       starRating: hotel.star_rating,
       numberOfReviews: hotel.number_of_reviews,
       overview: hotel.overview,
