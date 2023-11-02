@@ -191,14 +191,12 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     color: '#333',
-    fontFamily: 'Arial',
     lineHeight: 24, // Adjust the line height as per your preference
   },
   hotelLocation: {
     paddingHorizontal: 4,
     marginBottom: 4,
     color: '#666',
-    fontFamily: 'Arial',
     lineHeight: 18, // Adjust the line height as per your preference
   },
   ratingContainer: {

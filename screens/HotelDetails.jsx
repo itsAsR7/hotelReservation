@@ -1,17 +1,34 @@
 import { StyleSheet, Text, View, Image, TextInput } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
+import { AntDesign } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AppBar from '../components/AppBar';
 import { ScrollView } from 'react-native';
 import { Rating } from 'react-native-stock-star-rating';
 import { Dimensions } from 'react-native';
 import { TouchableOpacity } from 'react-native';
+import { addFavorite } from '../services/firebaseService';
+
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 const HotelDetails = ({ route, navigation }) => {
 
   const { hotel } = route.params;
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  const toggleFavorite = () => {
+    const hotelData = {
+      hotelName: hotel.hotel_name,
+      city: hotel.city,
+      starRating: hotel.star_rating,
+      numberOfReviews: hotel.number_of_reviews,
+      overview: hotel.overview,
+      ratesFrom: hotel.rates_from,
+    };
+
+    addFavorite(hotelData);
+  };
 
   return (
     <ScrollView>
@@ -51,9 +68,7 @@ const HotelDetails = ({ route, navigation }) => {
             >
               {hotel.city}
             </Text>
-            <View
-              style={{ justifyContent: 'space-between', flexDirection: 'row' }}
-            >
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Rating
                 maxStars={5}
                 stars={hotel.star_rating}
@@ -64,17 +79,26 @@ const HotelDetails = ({ route, navigation }) => {
                 style={{
                   fontSize: 14,
                   fontWeight: '500',
-
                   color: 'grey',
+                  marginLeft: 10,
                 }}
               >
-                {` (${hotel.number_of_reviews})`}
+                {`(${hotel.number_of_reviews})`}
               </Text>
+              <View style={styles.favoriteContainer}>
+                <TouchableOpacity onPress={toggleFavorite}>
+                  <AntDesign
+                    name={isFavorite ? 'heart' : 'hearto'}
+                    size={30}
+                    color={isFavorite ? 'red' : 'black'}
+                  />
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
         </View>
 
-        <View style={{ marginTop: 25, paddingTop: 90 }}>
+        <View style={{ marginTop: 40, paddingTop: 90 }}>
           <Text style={{ fontSize: 22, marginBottom: 10 }}>Description</Text>
           <TextInput
             multiline={true}
@@ -98,7 +122,7 @@ const HotelDetails = ({ route, navigation }) => {
             <TouchableOpacity onPress={()=>{}} style={styles.btn} >
             <Text style={{fontWeight:'600'}} >Book Now</Text>
             </TouchableOpacity>
-          </View>
+          </View>         
         </View>
       </View>
     </ScrollView>
@@ -118,7 +142,7 @@ const styles = StyleSheet.create({
   titleContainer: {
     margin: 5,
     backgroundColor: '#fff',
-    height: 120,
+    height: 'auto',
     position: 'absolute',
     top: 190,
     left: 0,
@@ -128,13 +152,18 @@ const styles = StyleSheet.create({
   titleColumn: {
     padding: 15,
   },
+  favoriteContainer: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    paddingLeft: 260, // Adjust as needed
+  },
   bottom: {
     marginTop:20,
     paddingHorizontal: 10,
     backgroundColor: '#fff',
     height: 90,
-    width:windowWidth - 20,
-   
+    width:windowWidth - 20,  
     paddingVertical: 20,
   },
   btn:{
