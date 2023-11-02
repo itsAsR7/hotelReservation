@@ -5,6 +5,7 @@ import {
   doc,
   getDoc,
   getDocs,
+  deleteDoc,
   query,
   updateDoc,
   where,
@@ -70,6 +71,24 @@ const getAllFavorites = async () => {
   }
 };
 
+const checkIfHotelIsFavorite = async (hotelName) => {
+    try {
+      const q = query(
+        collection(db, 'favorite'),
+        where('hotelName', '==', hotelName)
+      );
+  
+      const querySnapshot = await getDocs(q);
+      console.log(!querySnapshot.empty)
+
+      return !querySnapshot.empty;
+
+    } catch (error) {
+      console.error('Error checking favorite status:', error);
+      return false;
+    }
+  };
+
 const addFavorite = async (hotel) => {
     try {
       console.log(
@@ -77,7 +96,6 @@ const addFavorite = async (hotel) => {
       );
       const ownerUid = auth.currentUser.uid;
       const favoriteCollection = collection(db, 'favorite');
-      console.log(hotel)
   
       const hotelData = {
         hotelName: hotel.hotelName,
@@ -99,6 +117,38 @@ const addFavorite = async (hotel) => {
       return { isAdded: false, error: err.message };
     }
   };
+
+  const removeFavorite = async (hotelName) => {
+    try {
+      console.log(
+        `Removing favorite from Favorites with user uid [${auth.currentUser.uid}]`
+      );
+  
+      // Query the "favorite" collection to find the document with matching hotelName
+      const q = query(
+        collection(db, 'favorite'),
+        where('hotelName', '==', hotelName)
+      );
+  
+      const querySnapshot = await getDocs(q);
+  
+      if (!querySnapshot.empty) {
+        const favoriteId = querySnapshot.docs[0].id;
+        const favoriteRef = doc(db, 'favorite', favoriteId);
+        await deleteDoc(favoriteRef);
+  
+        console.log(`Favorite with ID ${favoriteId} removed.`);
+        return { isRemoved: true };
+      } else {
+        console.log(`No favorite with hotelName ${hotelName} found.`);
+        return { isRemoved: false, error: 'Favorite not found' };
+      }
+    } catch (error) {
+      console.error(`Error removing favorite: ${error}`);
+      return { isRemoved: false, error: error.message };
+    }
+  };
+  
 
 // const getRenterInfoByBooking = async (booking) => {
 //   try {
@@ -226,6 +276,8 @@ export {
   logout,
   addFavorite,
   getAllFavorites,
+  checkIfHotelIsFavorite,
+  removeFavorite,
   getUserAllBookingsDocs,
   addBooking,
 };

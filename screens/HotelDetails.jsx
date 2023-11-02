@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Image, TextInput } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AntDesign } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AppBar from '../components/AppBar';
@@ -7,7 +7,7 @@ import { ScrollView } from 'react-native';
 import { Rating } from 'react-native-stock-star-rating';
 import { Dimensions } from 'react-native';
 import { TouchableOpacity } from 'react-native';
-import { addFavorite } from '../services/firebaseService';
+import { addFavorite, checkIfHotelIsFavorite, removeFavorite } from '../services/firebaseService';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -17,7 +17,17 @@ const HotelDetails = ({ route, navigation }) => {
   const { hotel } = route.params;
   const [isFavorite, setIsFavorite] = useState(false);
 
-  const toggleFavorite = () => {
+  useEffect(() => {
+    checkIfFavorite();
+  }, []);
+
+  const checkIfFavorite = async () => {
+    const isFavoriteInFirebase = await checkIfHotelIsFavorite(hotel.hotel_name);
+
+    setIsFavorite(isFavoriteInFirebase);
+  };
+
+  const toggleFavorite = async () => {
     const hotelData = {
       hotelName: hotel.hotel_name,
       city: hotel.city,
@@ -26,8 +36,13 @@ const HotelDetails = ({ route, navigation }) => {
       overview: hotel.overview,
       ratesFrom: hotel.rates_from,
     };
-
-    addFavorite(hotelData);
+    if (isFavorite) {
+      await removeFavorite(hotel.hotel_name);
+      setIsFavorite(false); // Update the state immediately
+    } else {
+      await addFavorite(hotelData);
+      setIsFavorite(true); // Update the state immediately
+    }
   };
 
   return (
