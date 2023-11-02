@@ -23,25 +23,26 @@ const HotelDetails = ({ route, navigation }) => {
   }, []);
 
   const checkIfFavorite = async () => {
-    const isFavoriteInFirebase = await checkIfHotelIsFavorite(hotel.hotelId);
+    const isFavoriteInFirebase = await checkIfHotelIsFavorite(hotel.hotel_id);
 
     setIsFavorite(isFavoriteInFirebase);
   };
 
   const toggleFavorite = async () => {
     const hotelData = {
-      hotelId: hotel.hotel_id,
-      hotelName: hotel.hotel_name,
+      hotel_id: hotel.hotel_id,
+      hotel_name: hotel.hotel_name,
       photo1: hotel.photo1,
       city: hotel.city,
       country: hotel.country,
-      starRating: hotel.star_rating,
-      numberOfReviews: hotel.number_of_reviews,
+      star_rating: hotel.star_rating,
+      rates_from: hotel.rates_from,
+      number_of_reviews: hotel.number_of_reviews,
       overview: hotel.overview,
-      ratesFrom: hotel.rates_from,
+      rates_from: hotel.rates_from,
     };
     if (isFavorite) {
-      await removeFavorite(hotel.hotelId);
+      await removeFavorite(hotelData.hotel_id);
       setIsFavorite(false); // Update the state immediately
     } else {
       await addFavorite(hotelData);

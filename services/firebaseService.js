@@ -59,11 +59,8 @@ const getAllFavorites = async () => {
           favoriteId: doc.id, 
           ...doc.data(),
         };
-        console.log(favorite)
         allFavorites.push(favorite);
       });
-  
-      console.debug(`All favorites retrieved. Count: ${allFavorites.length}`)
   
       return allFavorites;
     } catch (err) {
@@ -73,11 +70,11 @@ const getAllFavorites = async () => {
   };
   
 
-const checkIfHotelIsFavorite = async (hotelId) => {
+const checkIfHotelIsFavorite = async (hotel_id) => {
     try {
       const q = query(
         collection(db, 'favorite'),
-        where('hotelId', '==', hotelId)
+        where('hotel_id', '==', hotel_id)
       );
   
       const querySnapshot = await getDocs(q);
@@ -101,15 +98,15 @@ const addFavorite = async (hotel) => {
   
       const hotelData = {
         ownerUid: auth.currentUser.uid,
-        hotelId: hotel.hotelId,
-        hotelName: hotel.hotelName,
+        hotel_id: hotel.hotel_id,
+        hotel_name: hotel.hotel_name,
         city: hotel.city,
         country: hotel.country,
         photo1: hotel.photo1,
-        starRating: hotel.starRating,
-        numberOfReviews: hotel.numberOfReviews,
+        star_rating: hotel.star_rating,
+        number_of_reviews: hotel.number_of_reviews,
         overview: hotel.overview,
-        ratesFrom: hotel.ratesFrom,
+        rates_from: hotel.rates_from,
         // Add other relevant fields here
       };
   
@@ -124,7 +121,7 @@ const addFavorite = async (hotel) => {
     }
   };
 
-  const removeFavorite = async (hotelId) => {
+  const removeFavorite = async (hotel_id) => {
     try {
       console.log(
         `Removing favorite from Favorites with user uid [${auth.currentUser.uid}]`
@@ -133,7 +130,7 @@ const addFavorite = async (hotel) => {
       // Query the "favorite" collection to find the document with matching hotelName
       const q = query(
         collection(db, 'favorite'),
-        where('hotelId', '==', hotelId)
+        where('hotel_id', '==', hotel_id)
       );
   
       const querySnapshot = await getDocs(q);

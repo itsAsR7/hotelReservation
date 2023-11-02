@@ -30,7 +30,7 @@ const Favourite = ({ navigation }) => {
     <Pressable onPress={() => onListItemPressed(item)}>
       <View style={styles.hotelCard}>
         <Image source={{uri: item.photo1}} style={styles.hotelImage} />
-        <Text style={styles.hotelName}>{item.hotelName}</Text>
+        <Text style={styles.hotelName}>{item.hotel_name}</Text>
         <Text style={styles.hotelLocation}>{item.city}, {item.country}</Text>
       </View>
     </Pressable>
