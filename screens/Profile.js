@@ -1,24 +1,23 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
-import firebase from '@react-native-firebase/app';
-import { db } from '../dbConfig';
+import OnboardingScreen from '../components/OnboardingScreen';
+import HotelsList from '../components/HotelsList';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { FontAwesome } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { auth } from '../dbConfig';
 
 
-""
-  const handleLogout = async () => {
-    try {
-      db()
-      .signOut()
-      .then(() => console.log('User signed out!'));
-      navigation.navigate('LoginScreen');
-      // You can navigate to the login screen or perform other actions here.
-    } catch (error) {
-      console.error('Sign-out error', error);
-    }
-  
+const handleLogout = async () => {
+  try {
+    await auth.signOut();
+    navigation.navigate('Onboarding');
+  } catch (err) {
+    console.error(
+      `Error when signing user (uid: ${auth.currentUser.uid}) out: ${err}`
+    );
   }
-
-
+};
 
 const ProfileScreen = () => {
   return (

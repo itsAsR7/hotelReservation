@@ -1,4 +1,5 @@
-import React from 'react';
+import { useState, useEffect } from "react";
+import { ActivityIndicator } from "react-native";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import OnboardingScreen from './components/OnboardingScreen';
@@ -9,21 +10,33 @@ import BottomTabNav from './navigation/BottomTabNav';
 import HotelDetails from './screens/HotelDetails';
 import HotelList from './screens/HotelList';
 import Search from './screens/Search';
-
+import { auth } from "./dbConfig";
 
 const Stack = createNativeStackNavigator();
 
-const App = () => {
-  return (
+function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(null);
+
+  useEffect(() => {
+    const listener = auth.onAuthStateChanged((user) => {
+      setIsLoggedIn(user !== null ? true : false);
+      console.log(
+        `Auth state changed. ${
+          user !== null ? `User uid: ${user.uid}` : "User not logged in"
+        }`
+      );
+    });
+
+    return listener;
+  }, []);
+
+  return isLoggedIn === null 
+  ? (<ActivityIndicator />) 
+  : (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen
-          name="Onboarding"
-          component={OnboardingScreen}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="Signup" component={SignupScreen} />
+      {isLoggedIn ? (
+        <>
         <Stack.Screen
           name="Bottom"
           component={BottomTabNav}
@@ -44,9 +57,21 @@ const App = () => {
           component={HotelList}
           options={{ headerShown: false }}
         />
-      </Stack.Navigator>
+        </> 
+      ) : (
+        <>
+          <Stack.Screen
+            name="Onboarding"
+            component={OnboardingScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="Signup" component={SignupScreen} />
+        </>
+      )}
+    </Stack.Navigator>
     </NavigationContainer>
   );
-};
+}
 
 export default App;

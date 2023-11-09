@@ -34,6 +34,7 @@ const logout = async () => {
     const userUid = auth.currentUser?.uid;
     await auth.signOut();
     isLoggedOut = true;
+    navigation.navigate('Onboarding');
     console.log(`User (uid: ${userUid}) logged out`);
   } catch (err) {
     console.error(
