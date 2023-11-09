@@ -11,16 +11,16 @@ const SearchScreen = ({ navigation }) => {
     <SafeAreaView style={{ flex: 1, margin: 15 }}>
       <View>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-          <Text >
+          <Text>
             <MaterialCommunityIcons
               name="account-circle"
               size={28}
               color="black"
             />
           </Text>
-          <Text style={{ fontSize:24, fontWeight:'500'}}>Hey Dilpreet</Text>
+          <Text style={{ fontSize: 24, fontWeight: '500' }}>Hey Dilpreet</Text>
 
-          <TouchableOpacity onPress={() => navigation.navigate('Search')}>
+          <TouchableOpacity onPress={() => navigation.navigate('HotelList')}>
             <FontAwesome name="search" size={22} color="black" />
           </TouchableOpacity>
         </View>
