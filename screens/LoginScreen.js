@@ -70,11 +70,12 @@ const LoginScreen = () => {
       <TextInput
         style={styles.input}
         placeholder="Password"
-        keyboardType="email-address"
+       
         autoCapitalize="none"
         value={password}
         onChangeText={setPassword}
         secureTextEntry
+        
       />
 
       <TouchableOpacity onPress={handleLogin} style={styles.loginButton}>
@@ -124,6 +125,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     textAlign: 'center',
     fontWeight: 'bold',
+    fontSize:18
   },
   logo: {
     padding:50,

@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import OnboardingScreen from './components/OnboardingScreen';
 import LoginScreen from './screens/LoginScreen';
 import SignupScreen from './screens/SignupScreen';
+import BookingScreen from "./screens/BookingScreen";
 
 import BottomTabNav from './navigation/BottomTabNav';
 import HotelDetails from './screens/HotelDetails';
@@ -57,6 +58,13 @@ function App() {
           component={HotelList}
           options={{ headerShown: false }}
         />
+        <Stack.Screen
+          name="BookingScreen"
+          component={BookingScreen}
+          options={{ headerShown:true}}
+        />
+
+
         </> 
       ) : (
         <>
@@ -65,6 +73,7 @@ function App() {
             component={OnboardingScreen}
             options={{ headerShown: false }}
           />
+
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="Signup" component={SignupScreen} />
         </>

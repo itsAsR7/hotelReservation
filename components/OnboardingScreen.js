@@ -68,7 +68,14 @@ const OnboardingScreen = ({ navigation }) => {
               Signup
             </Text>
           </TouchableOpacity>
+         
         </View>
+        <Text style={styles.taglineT}>
+            Unlock Your Stay 
+            </Text>
+            <Text style={styles.tagline}>
+            Where Comfort Meets Convenience!
+            </Text>
       </View>
     </View>
 
@@ -108,6 +115,7 @@ const styles = StyleSheet.create({
 
     alignItems: 'center',
     justifyContent: 'center',
+    marginTop:50,
   },
   logo: {
     height: 200,
@@ -139,6 +147,24 @@ const styles = StyleSheet.create({
   },
   buttonTextSignup: {
     color: '#000', // Text color for Signup button
+  },
+  tagline: {
+    fontFamily: 'monospace',
+    fontSize: 25,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: 'white', // Choose your preferred text color
+    marginVertical: 20,
+    fontWeight:'bold'
+  },
+  taglineT: {
+    fontFamily: 'monospace',
+    fontSize: 25,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: 'black', // Choose your preferred text color
+    marginVertical: 20,
+    fontWeight:'bold'
   },
 });
 

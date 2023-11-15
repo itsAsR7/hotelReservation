@@ -17,10 +17,17 @@ const HotelDetails = ({ route, navigation }) => {
 
   const { hotel } = route.params;
   const [isFavorite, setIsFavorite] = useState(false);
+  
+  const [bookingHotelDetails, setBookingHotelDetails] = useState('');
 
   useEffect(() => {
     checkIfFavorite();
+    setBookingHotelDetails(hotel)
   }, []);
+
+  const handleBookNowPress = () => {
+    navigation.navigate('BookingScreen', {hotel});
+  };
 
   const checkIfFavorite = async () => {
     const isFavoriteInFirebase = await checkIfHotelIsFavorite(hotel.hotel_id);
@@ -139,7 +146,7 @@ const HotelDetails = ({ route, navigation }) => {
             <Text style={{ fontSize: 16, color:'gray' }}>Jan 01- Feb 12</Text>
           </View>
           <View>
-            <TouchableOpacity onPress={()=>{}} style={styles.btn} >
+            <TouchableOpacity onPress={handleBookNowPress} style={styles.btn} >
             <Text style={{fontWeight:'600'}} >Book Now</Text>
             </TouchableOpacity>
           </View>         

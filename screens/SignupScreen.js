@@ -97,9 +97,9 @@ const SignupScreen = ( ) => {
         style={styles.input}
         placeholder="Password"
         placeholderTextColor="#5e5e5e"
-        plade
         
-        keyboardType="email-address"
+        
+       
         autoCapitalize="none"
         value={password}
         onChangeText={setPassword}
@@ -155,6 +155,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     textAlign: 'center',
     fontWeight: 'bold',
+    fontSize:18
   },
   logo: {
     padding:50,

@@ -14,24 +14,28 @@ const SearchScreen = ({ navigation }) => {
           <Text>
             <MaterialCommunityIcons
               name="account-circle"
-              size={28}
+              size={68}
               color="black"
             />
           </Text>
-          <Text style={{ fontSize: 24, fontWeight: '500' }}>Hey Dilpreet</Text>
+          <Text style={{ fontSize: 50, fontWeight: '500' }}>Hey User</Text>
 
           <TouchableOpacity onPress={() => navigation.navigate('HotelList')}>
-            <FontAwesome name="search" size={22} color="black" />
+            <FontAwesome name="search" size={50} color="black" />
           </TouchableOpacity>
         </View>
-        <Text style={{ marginTop: 15, fontSize: 14 }}>
+        
+        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+
+        <Text style={{ marginTop: 15, fontSize: 22 }}>
           Complimentary Services
         </Text>
         <Image
           source={require('../assets/freewifi.png')}
-          style={{ height: 60, width: 300, marginTop: 20 }}
+          style={{ height: 70, width: 300, marginTop: 5}}
         />
-        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+
+
           <Image
             source={require('../assets/offer.png')}
             style={{
