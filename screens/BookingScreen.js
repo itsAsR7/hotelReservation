@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { Image,View, Text, TextInput, Button, StyleSheet } from 'react-native';
 import { Dimensions } from 'react-native';
 
-import { db } from "../dbConfig"
+import { db,app,auth } from "../dbConfig"
 import { collection, addDoc } from 'firebase/firestore';
 
 const windowWidth = Dimensions.get('window').width;
@@ -18,15 +18,29 @@ const BookingScreen = ({ route }) => {
     // Perform the booking logic here (e.g., save data to Firebase)
 
     const bookingData = {
-      hotelName: "hotel.name",
-      city: "hotel.city",
-      country: "hotel.country",
-      numberOfPeople,
-      totalPrice: hotel.price * numberOfPeople,
-    };
+      image:hotel.photo1,
+      hotelName:hotel.hotel_name,
+      city:hotel.city,
+      country:hotel.country,
+      people:numberOfPeople,
+      totalPrice:hotel.rates_from,
+      id:auth.currentUser.uid,
+      hotelID:hotel.hotel_id,
+      longitude:hotel.longitude,
+      latitude:hotel.latitude
+      
+      
+    }
 
     // Save to Firebase Realtime Database
     try {
+
+      const uid = auth.currentUser.uid;
+      
+      
+      
+
+
         const docRef = await addDoc(collection(db, 'Bookings'), bookingData);
         alert('Success!', 'This hotel booking has been added to your bookings list.');
         console.log('Document written with ID: ', docRef.id);
@@ -64,11 +78,12 @@ const BookingScreen = ({ route }) => {
 
       <View style ={styles.details}>
 
+      
       <Text style ={{fontSize:30}}>{hotel.hotel_name}</Text>
       <Text style ={{fontSize:30}}>{hotel.city}</Text>
       <Text style ={{fontSize:30}}>{hotel.country}</Text>
       <Text style ={{fontSize:30}}>${hotel.rates_from}</Text>
-
+      
       </View>
 
       <Text style={styles.subtitle}>Number of People:</Text>

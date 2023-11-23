@@ -62,7 +62,7 @@ const LoginScreen = () => {
         onBlur={validateEmail}
       />
 
-      {!isValidEmail && <Text style={{ color: 'red',fontSize:'20' }}>Invalid email address</Text>}
+      {!isValidEmail && <Text style={{ color: 'red',fontSize:20 }}>Invalid email address</Text>}
 
 
 

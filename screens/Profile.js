@@ -1,12 +1,12 @@
-import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import React,{useState,useEffect} from 'react';
+import { KeyboardAvoidingView,ScrollView,FlatList,View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import OnboardingScreen from '../components/OnboardingScreen';
 import HotelsList from '../components/HotelsList';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { FontAwesome } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { auth } from '../dbConfig';
-
+import { auth,db } from '../dbConfig';
+import { getDoc, doc,collection, query, where, getDocs } from "firebase/firestore";
 
 const handleLogout = async () => {
   try {
@@ -20,33 +20,122 @@ const handleLogout = async () => {
 };
 
 const ProfileScreen = () => {
+
+  const [BookingsForUI, setBookingsForUI] = useState([]);
+
+  useEffect(()=>{
+    console.log("Screen has loaded, attempting to get user profile for Profile.js")
+    
+    
+    getUserProfile()
+    
+    },[])
+
+  const getUserProfile = async () => {
+
+    const q = query(collection(db, "Bookings"), where("id", "==", auth.currentUser.uid));
+
+    const querySnapshot = await getDocs(q);
+    setBookingsForUI(querySnapshot.data)
+    querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      console.log(doc.id, " => ", doc.data());
+    });
+
+    const bookingsData = [];
+    querySnapshot.forEach((doc) => {
+      bookingsData.push({ id: doc.id, ...doc.data() });
+    });
+
+    setBookingsForUI(bookingsData);
+  
+  
+  }
+
+
+
+      
+
+
+
+
   return (
+ 
+
     <View style={styles.container}>
       <View style={styles.header}>
         <Image
           source={require('../assets/profile.jpg')}
           style={styles.profileImage}
         />
-        <Text style={styles.username}>John Doe</Text>
-        <Text style={styles.email}>johndoe@example.com</Text>
+        <Text style={styles.username}>{auth.currentUser.email}</Text>
+        <Text style={styles.email}>{auth.currentUser.uid}</Text>
       </View>
-
-      <View style={styles.bioContainer}>
-        <Text style={styles.bio}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae
-          aliquam justo. Proin id convallis justo.
-        </Text>
-      </View>
-
-      <View style={styles.buttonContainer}>
+       <View style={styles.buttonContainer} onPress={getUserProfile}>
         <TouchableOpacity style={styles.editButton}>
-          <Text style={styles.buttonText}>Edit Profile</Text>
+          <Text style={styles.buttonText}>Reload Bookings</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
           <Text style={styles.buttonText}>Logout</Text>
         </TouchableOpacity>
+
+        
       </View>
+  
+      <View style={styles.container1}>
+        
+
+      <FlatList
+          data={BookingsForUI}
+
+          keyExtractor={(item) => item.hotelID}
+
+          renderItem={({ item }) => (
+
+             <View style={styles.bookingItem}>
+            <Image source={{ uri: item.image}} style={styles.renterPhoto} />
+            
+            
+             
+              <View style={styles.bookingInfo}>
+                <Text>{item.country}</Text>
+                <Text>{item.hotelName}</Text>
+                <Text>{item.city}</Text>
+              
+                </View>
+                </View>
+                
+                )}
+
+
+        />
+        
+        </View>
+        
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
     </View>
+   
+     
+   
+
+
+
+
+
   );
 };
 
@@ -54,11 +143,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
+    marginBottom:100
   },
   header: {
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 20,
+    
   },
   profileImage: {
     width: 150,
@@ -75,9 +165,7 @@ const styles = StyleSheet.create({
     color: 'gray',
     marginBottom: 20,
   },
-  bioContainer: {
-    paddingHorizontal: 20,
-  },
+ 
   bio: {
     fontSize: 16,
     textAlign: 'center',
@@ -85,7 +173,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: 20,
+    marginTop:0,
   },
   editButton: {
     backgroundColor: 'blue',
@@ -103,6 +191,51 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 16,
   },
+  container1: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  bookingItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: 10,
+    
+  },
+  renterPhoto: {
+    width: 70,
+    height: 70,
+    borderRadius: 25,
+    marginRight: 10,
+    resizeMode:'contain',
+  },
+  bookingInfo: {
+    flexDirection: 'column',
+    alignItems: 'left',
+    marginVertical: 10,
+    width:200
+  
+    
+    
+  },
+  actionsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginTop: 10,
+  },
+  scrollView: {
+    flex: 1,
+    marginBottom: 100, // Adjust the value as needed
+  },
+  item: {
+    padding: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
+  },
+
+
+
+
 });
 
 export default ProfileScreen

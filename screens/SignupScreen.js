@@ -74,7 +74,7 @@ const SignupScreen = ( ) => {
         onBlur={validateEmail}
       />
 
-      {!isValidEmail && <Text style={{ color: 'white',fontSize:'24,',fontWeight:'bold' }}>Invalid email address</Text>}
+      {!isValidEmail && <Text style={{ color: 'white',fontSize:24,fontWeight:'bold' }}>Invalid email address</Text>}
 
       <TextInput
         style={styles.input}
@@ -86,7 +86,7 @@ const SignupScreen = ( ) => {
         onBlur={validateConfirmEmail}
       />
 
-      {!isValidConfirmEmail && <Text style={{ color: 'white',fontSize:'24,',fontWeight:'bold' }}>Invalid email address</Text>}
+      {!isValidConfirmEmail && <Text style={{ color: 'white',fontSize:24,fontWeight:'bold' }}>Invalid email address</Text>}
 
 
 

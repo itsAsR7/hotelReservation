@@ -5,6 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { FontAwesome } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Search from './Search';
+import { auth } from '../dbConfig';
 
 const SearchScreen = ({ navigation }) => {
   return (
@@ -18,7 +19,7 @@ const SearchScreen = ({ navigation }) => {
               color="black"
             />
           </Text>
-          <Text style={{ fontSize: 50, fontWeight: '500' }}>Hey User</Text>
+          <Text style={{ fontSize: 27, fontWeight: '500' }}>{auth.currentUser.email}</Text>
 
           <TouchableOpacity onPress={() => navigation.navigate('HotelList')}>
             <FontAwesome name="search" size={50} color="black" />
