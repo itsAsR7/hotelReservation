@@ -59,6 +59,18 @@ function App() {
           component={BottomTabNav}
           options={({ navigation }) => ({
             headerShown: true,
+
+            headerStyle: {
+              backgroundColor: '#f4511e',
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              color:"black",
+              fontSize:26,
+              fontFamily:"monospace"
+            },
+  
             title: "Quick Stay",
             headerRight: () => (
               <Menu
