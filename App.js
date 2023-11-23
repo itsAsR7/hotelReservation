@@ -12,11 +12,26 @@ import HotelDetails from './screens/HotelDetails';
 import HotelList from './screens/HotelList';
 import Search from './screens/Search';
 import { auth } from "./dbConfig";
+import { Provider as PaperProvider, Menu, IconButton } from "react-native-paper";
 
 const Stack = createNativeStackNavigator();
+const handleLogout = async () => {
+  try {
+    await auth.signOut();
+    navigation.navigate('Onboarding');
+  } catch (err) {
+    console.error(
+      `Error when signing user (uid: ${auth.currentUser.uid}) out: ${err}`
+    );
+  }
+};
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(null);
+
+  const [isMenuVisible, setIsMenuVisible] = useState(false);
+  const openMenu = () => setIsMenuVisible(true);
+  const closeMenu = () => setIsMenuVisible(false);
 
   useEffect(() => {
     const listener = auth.onAuthStateChanged((user) => {
@@ -34,6 +49,7 @@ function App() {
   return isLoggedIn === null 
   ? (<ActivityIndicator />) 
   : (
+    <PaperProvider>
     <NavigationContainer>
       <Stack.Navigator>
       {isLoggedIn ? (
@@ -41,7 +57,27 @@ function App() {
         <Stack.Screen
           name="Bottom"
           component={BottomTabNav}
-          options={{ headerShown: false }}
+          options={({ navigation }) => ({
+            headerShown: true,
+            title: "Quick Stay",
+            headerRight: () => (
+              <Menu
+                visible={isMenuVisible}
+                onDismiss={closeMenu}
+                anchor={
+                  <IconButton
+                    icon="dots-vertical"
+                    color="white"
+                    size={24}
+                    onPress={openMenu}
+                  />
+                }
+              >
+                
+                <Menu.Item onPress={handleLogout} title="Logout" />
+              </Menu>
+            ),
+          })}
         />
         <Stack.Screen
           name="Search"
@@ -80,6 +116,7 @@ function App() {
       )}
     </Stack.Navigator>
     </NavigationContainer>
+    </PaperProvider>
   );
 }
 

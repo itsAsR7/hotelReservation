@@ -9,6 +9,7 @@ import Favourite from '../screens/Favourite';
 import Profile from '../screens/Profile';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 
+
 const Tab = createBottomTabNavigator();
 
 const tabBarStyle = {
