@@ -83,10 +83,22 @@ const ProfileScreen = () => {
       </View>
   
       <View style={styles.container1}>
+        <Text style={{fontSize:20}}>Bookings</Text>
         
 
       <FlatList
           data={BookingsForUI}
+
+          ItemSeparatorComponent={
+            // ItemSeparatorComponent is used to draw a "line" between each row
+            () => {
+              return (
+                <View
+                  style={{ marginLeft: 0, borderWidth: 1, borderColor: "#ccc", marginVertical: 5 }}
+                />
+              )
+            }}
+  
 
           keyExtractor={(item) => item.hotelID}
 
@@ -193,8 +205,10 @@ const styles = StyleSheet.create({
   },
   container1: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: 'left',
+    alignItems: 'left',
+    marginLeft:20,
+    marginRight:20
   },
   bookingItem: {
     flexDirection: 'row',
