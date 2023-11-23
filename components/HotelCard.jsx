@@ -9,7 +9,7 @@ const HotelCard = ({ item, margin, onPress }) => {
         <View style={styles.imgcon}>
           <Image
             source={{ uri: item.photo1 }}
-            width={180}
+            width={210}
             height={140}
             borderRadius={16}
           />
@@ -28,8 +28,8 @@ export default HotelCard;
 
 const styles = StyleSheet.create({
   card: (margin) => ({
-    width: 210,
-    height: 310,
+    width: 250,
+    height: 330,
     borderRadius: 16,
     backgroundColor: '#cfcfcf',
     marginRight: margin,

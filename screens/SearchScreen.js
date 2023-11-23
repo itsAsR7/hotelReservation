@@ -15,26 +15,23 @@ const SearchScreen = ({ navigation }) => {
           <Text>
             <MaterialCommunityIcons
               name="account-circle"
-              size={68}
-              color="black"
+              size={43}
+              color="navy"
             />
           </Text>
-          <Text style={{ fontSize: 27, fontWeight: '500' }}>{auth.currentUser.email}</Text>
+          <Text style={{ fontSize: 25, fontWeight: '500',color:'navy' }}>{auth.currentUser.email}</Text>
 
           <TouchableOpacity onPress={() => navigation.navigate('HotelList')}>
-            <FontAwesome name="search" size={50} color="black" />
+            <FontAwesome name="search" size={30} color="navy" />
           </TouchableOpacity>
         </View>
         
         <View style={{ alignItems: 'center', justifyContent: 'center' }}>
 
         <Text style={{ marginTop: 15, fontSize: 22 }}>
-          Complimentary Services
+       
         </Text>
-        <Image
-          source={require('../assets/freewifi.png')}
-          style={{ height: 70, width: 300, marginTop: 5}}
-        />
+        
 
 
          

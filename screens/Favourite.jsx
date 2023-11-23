@@ -56,6 +56,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginHorizontal: 10,
+    marginBottom:100
   },
   hotelCard: {
     marginBottom: 20,

@@ -6057,6 +6057,11 @@ react-native-email-validator@^0.1.1:
   resolved "https://registry.npmjs.org/react-native-email-validator/-/react-native-email-validator-0.1.1.tgz"
   integrity sha512-XAyrSmLsb0H1KuGJJCJ0Hjzy7Dotj88QiWcZ2CNQzVTYuxiWm7rl0Agv/RUbtMd3Jth92bf6QMU+gqSHNeHyug==
 
+react-native-geolocation-service@^5.3.1:
+  version "5.3.1"
+  resolved "https://registry.npmjs.org/react-native-geolocation-service/-/react-native-geolocation-service-5.3.1.tgz"
+  integrity sha512-LTXPtPNmrdhx+yeWG47sAaCgQc3nG1z+HLLHlhK/5YfOgfLcAb9HAkhREPjQKPZOUx8pKZMIpdGFUGfJYtimXQ==
+
 react-native-maps@1.7.1:
   version "1.7.1"
   resolved "https://registry.npmjs.org/react-native-maps/-/react-native-maps-1.7.1.tgz"
