@@ -37,15 +37,7 @@ const SearchScreen = ({ navigation }) => {
         />
 
 
-          <Image
-            source={require('../assets/offer.png')}
-            style={{
-              height: 60,
-              width: 300,
-              marginBottom: 20,
-              borderRadius: 18,
-            }}
-          />
+         
         </View>
       </View>
 
