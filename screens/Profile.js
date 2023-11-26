@@ -8,6 +8,10 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { auth,db } from '../dbConfig';
 import { getDoc, doc,collection, query, where, getDocs } from "firebase/firestore";
 
+
+
+
+
 const handleLogout = async () => {
   try {
     await auth.signOut();

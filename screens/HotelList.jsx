@@ -1,4 +1,3 @@
-
 import {
   StyleSheet,
   Text,
@@ -19,6 +18,7 @@ const HotelList = ({ navigation }) => {
   const [hotels, setHotels] = useState([]);
   const [searchKey, setSearchKey] = useState('');
   const [searchResults, setSearchResults] = useState([]);
+  const [searchKeyword, setSearchKeyword] = useState([]);
 
   useEffect(() => {
     const fetchHotels = async () => {
@@ -34,6 +34,20 @@ const HotelList = ({ navigation }) => {
     fetchHotels();
   }, []);
 
+  const handleSearchKeyword = (keyword) => {
+    setSearchKey(keyword); // Update the state with the entered keyword
+    if (keyword.trim() === '') {
+      setSearchResults([]);
+    } else {
+      const filteredResults = hotels.filter(
+        (hotel) =>
+          (hotel.city && hotel.city.toLowerCase().includes(keyword.toLowerCase()))
+      );
+      setSearchResults(filteredResults);
+    }
+  };
+  
+  
   const onListItemPressed = (hotel) => {
     navigation.navigate('HotelDetails', { hotel: hotel });
   };
@@ -46,7 +60,6 @@ const HotelList = ({ navigation }) => {
           left={0}
           right={0}
           titleText={'Hotel List'}
-          // icon={'search'}
           onPress={() => navigation.goBack()}
           onPress1={() => navigation.navigate('Bottom')}
         />
@@ -57,8 +70,8 @@ const HotelList = ({ navigation }) => {
             <TextInput
               style={styles.input}
               value={searchKey}
-              onChangeText={setSearchKey}
-              placeholder="Search for Hotels to stay"
+              onChangeText={handleSearchKeyword}
+              placeholder="Search for Hotels by city or name"
             />
           </View>
 
@@ -67,7 +80,7 @@ const HotelList = ({ navigation }) => {
           </TouchableOpacity>
         </View>
         <FlatList
-          data={hotels}
+          data={searchResults.length > 0 ? searchResults : hotels}
           keyExtractor={(item) => item.hotel_id}
           renderItem={({ item }) => (
             <ResuseTile item={item} onPress={() => onListItemPressed(item)} />
