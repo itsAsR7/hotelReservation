@@ -5,7 +5,7 @@ import { getHotels } from '../services/apiservice';
 
 
 
-const Location = () => {
+const Location = ({ navigation }) => {
   useEffect(() => {
     getLocation();
 
@@ -132,7 +132,10 @@ const Location = () => {
             longitude: val.longitude,
           }}
           key={index}
-          title={val.name} // Assuming your hotel objects have a "name" property
+          title={val.hotel_name} // Assuming your hotel objects have a "name" property
+          onPress={() => navigation.navigate('HotelDetails',{ hotel:val })}
+          
+          
         />
       ));
     }

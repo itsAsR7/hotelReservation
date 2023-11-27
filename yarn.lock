@@ -6125,7 +6125,7 @@ react-native-stock-star-rating@^1.0.6:
   resolved "https://registry.npmjs.org/react-native-stock-star-rating/-/react-native-stock-star-rating-1.0.6.tgz"
   integrity sha512-YQMGVYX03kq9cW0Of0y+fad9A1RpyM/ZOKMb2o15DfITcceLlrz5x83B6kBOl6SxM/YzdXpMvphWNZehilJ46g==
 
-react-native-vector-icons@*:
+react-native-vector-icons@*, react-native-vector-icons@^10.0.2:
   version "10.0.2"
   resolved "https://registry.npmjs.org/react-native-vector-icons/-/react-native-vector-icons-10.0.2.tgz"
   integrity sha512-ZwhUkJhIMkGL3cW7IT4sEEHu2AOzerqsRQ73UzXsB+ecBpVK5bRmp0XswiQleZKZalZfs/WIfWLXLfTQHcQo6A==
