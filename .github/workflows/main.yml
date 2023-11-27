@@ -1,0 +1,40 @@
+# This is a basic workflow that is manually triggered
+
+name: App workflow
+
+# Controls when the action will run. Workflow runs when manually triggered using the UI
+# or API.
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16
+
+    - name: Install Expo CLI
+      run: npm install -g expo-cli
+
+    - name: Install Dependencies
+      run: npm install
+
+    - name: Authenticate with EAS
+      run: expo login --username ${{ secrets.EXPO_USERNAME }} --password ${{ secrets.EXPO_PASSWORD }}
+
+    - name: Build with EAS
+      run: expo eas build --platform android
+
+    - name: Publish to App Store and Google Play
+      run: |
+        # add
