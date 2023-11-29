@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Image } from 'react-native';
+import {View, Text, TouchableOpacity, Image, Pressable } from 'react-native';
 import HotelsList from '../components/HotelsList';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { FontAwesome } from '@expo/vector-icons';
@@ -12,13 +12,15 @@ const SearchScreen = ({ navigation }) => {
     <SafeAreaView style={{ flex: 1, margin: 15 }}>
       <View>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-          <Text>
+          <Pressable
+          onPress={() => navigation.navigate('Profile')}>
             <MaterialCommunityIcons
               name="account-circle"
               size={43}
               color="navy"
-            />
-          </Text>
+              />
+              </Pressable>
+         
           <Text style={{ fontSize: 25, fontWeight: '500',color:'navy' }}>{auth.currentUser.email}</Text>
 
           <TouchableOpacity onPress={() => navigation.navigate('HotelList')}>

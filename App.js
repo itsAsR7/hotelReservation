@@ -6,7 +6,7 @@ import OnboardingScreen from './components/OnboardingScreen';
 import LoginScreen from './screens/LoginScreen';
 import SignupScreen from './screens/SignupScreen';
 import BookingScreen from "./screens/BookingScreen";
-
+import ProfileScreen from "./screens/Profile";
 import BottomTabNav from './navigation/BottomTabNav';
 import HotelDetails from './screens/HotelDetails';
 import HotelList from './screens/HotelList';
@@ -119,6 +119,11 @@ function App() {
           <Stack.Screen
             name="Onboarding"
             component={OnboardingScreen}
+            options={{ headerShown: false }}
+          />
+           <Stack.Screen
+            name="Profile"
+            component={ProfileScreen}
             options={{ headerShown: false }}
           />
 
