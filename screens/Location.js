@@ -1,11 +1,14 @@
 import {TouchableOpacity, View, Text, StyleSheet } from 'react-native';
-import React, { useEffect, useState } from 'react';
-import MapView, { Marker } from 'react-native-maps';
+import React, { useEffect, useRef, useState } from 'react';
+import MapView, { Marker,MapPressEvent } from 'react-native-maps';
 import { getHotels } from '../services/apiservice';
 
 
 
 const Location = ({ navigation }) => {
+
+  const mapRef = useRef<MapView>(null);
+
   useEffect(() => {
     getLocation();
 
@@ -123,6 +126,38 @@ const Location = ({ navigation }) => {
     console.log(location);
   };
 
+  
+  
+  const handleZoomIn = () => {
+    mapRef.current?.getCamera().then((camera) => {
+      const nextZoom = camera.zoom + 1;
+      mapRef.current?.animateToRegion(
+        {
+          latitude: camera.center.latitude,
+          longitude: camera.center.longitude,
+          latitudeDelta: camera.region.latitudeDelta / 2,
+          longitudeDelta: camera.region.longitudeDelta / 2,
+        },
+        300
+      );
+    });
+  };
+  
+  const handleZoomOut = () => {
+    mapRef.current?.getCamera().then((camera) => {
+      const nextZoom = camera.zoom - 1;
+      mapRef.current?.animateToRegion(
+        {
+          latitude: camera.center.latitude,
+          longitude: camera.center.longitude,
+          latitudeDelta: camera.region.latitudeDelta * 2,
+          longitudeDelta: camera.region.longitudeDelta * 2,
+        },
+        300
+      );
+    });
+  };
+
   const renderMarkers = () => {
     if (hotels.length > 0) {
       return hotels.map((val, index) => (
@@ -168,6 +203,17 @@ const Location = ({ navigation }) => {
           <Text style={styles.buttonText}>Show Hotels</Text>
     </TouchableOpacity>
 
+    <View style={styles.zoomContainer}>
+        <TouchableOpacity style={styles.zoomButton} onPress={handleZoomIn}>
+          <Text style={styles.buttonText}>+</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.zoomButton} onPress={handleZoomOut}>
+          <Text style={styles.buttonText}>-</Text>
+        </TouchableOpacity>
+      </View>
+
+    
+
     </View>
 
 
@@ -197,5 +243,19 @@ const styles = StyleSheet.create({
   
 
     
+  },
+
+  zoomContainer: {
+    position: 'absolute',
+    top: 20,
+    right: 20,
+    flexDirection: 'column',
+  },
+  zoomButton: {
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    padding: 10,
+    borderRadius: 5,
+    marginVertical: 5,
+    alignItems: 'center',
   },
 });

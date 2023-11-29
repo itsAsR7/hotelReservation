@@ -8,6 +8,9 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { auth,db } from '../dbConfig';
 import { getDoc, doc,collection, query, where, getDocs } from "firebase/firestore";
 
+import ImagePicker from 'react-native-image-picker';
+import ImageCropPicker from 'react-native-image-crop-picker';
+
 
 
 
