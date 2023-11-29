@@ -1,19 +1,30 @@
-import React,{useState,useEffect} from 'react';
-import { KeyboardAvoidingView,ScrollView,FlatList,View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import {
+  KeyboardAvoidingView,
+  ScrollView,
+  FlatList,
+  View,
+  Button,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 import OnboardingScreen from '../components/OnboardingScreen';
 import HotelsList from '../components/HotelsList';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { FontAwesome } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { auth,db } from '../dbConfig';
-import { getDoc, doc,collection, query, where, getDocs } from "firebase/firestore";
-
-import ImagePicker from 'react-native-image-picker';
-import ImageCropPicker from 'react-native-image-crop-picker';
-
-
-
-
+import { auth, db } from '../dbConfig';
+import {
+  getDoc,
+  doc,
+  collection,
+  query,
+  where,
+  getDocs,
+} from 'firebase/firestore';
+import * as ImagePicker from 'expo-image-picker';
 
 const handleLogout = async () => {
   try {
@@ -27,26 +38,46 @@ const handleLogout = async () => {
 };
 
 const ProfileScreen = () => {
-
   const [BookingsForUI, setBookingsForUI] = useState([]);
+  const [image, setImage] = useState(null);
 
-  useEffect(()=>{
-    console.log("Screen has loaded, attempting to get user profile for Profile.js")
-    
-    
-    getUserProfile()
-    
-    },[])
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+    }
+  };
+
+
+
+  useEffect(() => {
+    console.log(
+      'Screen has loaded, attempting to get user profile for Profile.js'
+    );
+
+    getUserProfile();
+  }, []);
 
   const getUserProfile = async () => {
-
-    const q = query(collection(db, "Bookings"), where("id", "==", auth.currentUser.uid));
+    const q = query(
+      collection(db, 'Bookings'),
+      where('id', '==', auth.currentUser.uid)
+    );
 
     const querySnapshot = await getDocs(q);
-    setBookingsForUI(querySnapshot.data)
+    setBookingsForUI(querySnapshot.data);
     querySnapshot.forEach((doc) => {
       // doc.data() is never undefined for query doc snapshots
-      console.log(doc.id, " => ", doc.data());
+      console.log(doc.id, ' => ', doc.data());
     });
 
     const bookingsData = [];
@@ -55,106 +86,60 @@ const ProfileScreen = () => {
     });
 
     setBookingsForUI(bookingsData);
-  
-  
-  }
-
-
-
-      
-
-
-
+  };
 
   return (
- 
-
     <View style={styles.container}>
       <View style={styles.header}>
-        <Image
-          source={require('../assets/profile.jpg')}
-          style={styles.profileImage}
-        />
+        <Image source={ image===null? require("../assets/profile.jpg") : {uri: image}} style={styles.profileImage} />
+        <Button title="Pick an image from camera roll" onPress={pickImage} />
         <Text style={styles.username}>{auth.currentUser.email}</Text>
         <Text style={styles.email}>{auth.currentUser.uid}</Text>
       </View>
-       <View style={styles.buttonContainer} onPress={getUserProfile}>
+      <View style={styles.buttonContainer} onPress={getUserProfile}>
         <TouchableOpacity style={styles.editButton}>
           <Text style={styles.buttonText}>Reload Bookings</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
           <Text style={styles.buttonText}>Logout</Text>
         </TouchableOpacity>
-
-        
       </View>
-  
+
       <View style={styles.container1}>
-        <Text style={{fontSize:20}}>Bookings</Text>
-        
+        <Text style={{ fontSize: 20 }}>Bookings</Text>
 
-      <FlatList
+        <FlatList
           data={BookingsForUI}
-
           ItemSeparatorComponent={
             // ItemSeparatorComponent is used to draw a "line" between each row
             () => {
               return (
                 <View
-                  style={{ marginLeft: 0, borderWidth: 1, borderColor: "#ccc", marginVertical: 5 }}
+                  style={{
+                    marginLeft: 0,
+                    borderWidth: 1,
+                    borderColor: '#ccc',
+                    marginVertical: 5,
+                  }}
                 />
-              )
-            }}
-  
-
+              );
+            }
+          }
           keyExtractor={(item) => item.hotelID}
-
           renderItem={({ item }) => (
+            <View style={styles.bookingItem}>
+              <Image source={{ uri: item.image }} style={styles.renterPhoto} />
 
-             <View style={styles.bookingItem}>
-            <Image source={{ uri: item.image}} style={styles.renterPhoto} />
-            
-            
-             
               <View style={styles.bookingInfo}>
                 <Text>{item.country}</Text>
                 <Text>{item.hotelName}</Text>
                 <Text>{item.city}</Text>
-              
-                </View>
-                </View>
-                
-                )}
-
-
+              </View>
+            </View>
+          )}
         />
-        
-        </View>
-        
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
+      </View>
     </View>
-   
-     
-   
-
-
-
-
-
   );
 };
 
@@ -162,12 +147,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
-    marginBottom:100
+    marginBottom: 100,
   },
   header: {
     alignItems: 'center',
     justifyContent: 'center',
-    
   },
   profileImage: {
     width: 150,
@@ -184,7 +168,7 @@ const styles = StyleSheet.create({
     color: 'gray',
     marginBottom: 20,
   },
- 
+
   bio: {
     fontSize: 16,
     textAlign: 'center',
@@ -192,7 +176,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop:0,
+    marginTop: 0,
   },
   editButton: {
     backgroundColor: 'blue',
@@ -214,30 +198,26 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'left',
     alignItems: 'left',
-    marginLeft:20,
-    marginRight:20
+    marginLeft: 20,
+    marginRight: 20,
   },
   bookingItem: {
     flexDirection: 'row',
     alignItems: 'center',
     marginVertical: 10,
-    
   },
   renterPhoto: {
     width: 70,
     height: 70,
     borderRadius: 25,
     marginRight: 10,
-    resizeMode:'contain',
+    resizeMode: 'contain',
   },
   bookingInfo: {
     flexDirection: 'column',
     alignItems: 'left',
     marginVertical: 10,
-    width:200
-  
-    
-    
+    width: 200,
   },
   actionsContainer: {
     flexDirection: 'row',
@@ -253,10 +233,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#ddd',
   },
-
-
-
-
 });
 
-export default ProfileScreen
+export default ProfileScreen;
