@@ -34,18 +34,20 @@ const HotelList = ({ navigation }) => {
     fetchHotels();
   }, []);
 
-  const handleSearchKeyword = (keyword) => {
-    setSearchKey(keyword); // Update the state with the entered keyword
-    if (keyword.trim() === '') {
-      setSearchResults([]);
-    } else {
-      const filteredResults = hotels.filter(
-        (hotel) =>
-          (hotel.city && hotel.city.toLowerCase().includes(keyword.toLowerCase()))
-      );
-      setSearchResults(filteredResults);
-    }
-  };
+const handleSearchKeyword = (keyword) => {
+  setSearchKey(keyword); // Update the state with the entered keyword
+  if (keyword.trim() === '') {
+    setSearchResults([]);
+  } else {
+    const filteredResults = hotels.filter(
+      (hotel) =>
+        (hotel.city && hotel.city.toLowerCase().includes(keyword.toLowerCase())) ||
+        (hotel.hotel_name && hotel.hotel_name.toLowerCase().includes(keyword.toLowerCase()))
+    );
+    setSearchResults(filteredResults);
+  }
+};
+
   
   
   const onListItemPressed = (hotel) => {
