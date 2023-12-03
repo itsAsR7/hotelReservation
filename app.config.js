@@ -1,7 +1,7 @@
 export default {
     expo: {
       android: {
-        package: 'com.your.package.name',
+        package: 'com.asr7.hotelReservation',
         config: {
           appSecret: {
             value: 'APP_CENTER_SECRET',
