@@ -43,7 +43,7 @@ const BottomTabNav = () => {
           headerShown: false,
           tabBarIcon: ({ focused }) => (
             <Ionicons
-              name="search"
+              name="home"
               size={35}
               color={focused ? 'red' : 'gray'}
             />
