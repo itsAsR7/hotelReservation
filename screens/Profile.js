@@ -182,7 +182,9 @@ const ProfileScreen = ({ navigation }) => {
     <View style={styles.container}>
       <View style={styles.header}>
         <Image source={ image===null? require("../assets/profile.jpg") : {uri: image}} style={styles.profileImage} />
-        <Button title="Pick an image from camera roll" onPress={pickImage} />
+        <TouchableOpacity style={styles.button} onPress={pickImage}>
+          <Text style={styles.buttonText}>Pick an Image</Text>
+        </TouchableOpacity>
         <Text style={styles.username}>{name}</Text>
         <Text style={styles.username}>{auth.currentUser.email}</Text>
         <Text style={styles.email}>{auth.currentUser.uid}</Text>
@@ -197,7 +199,7 @@ const ProfileScreen = ({ navigation }) => {
       </View>
 
       <View style={styles.container1}>
-        <Text style={{ fontSize: 20 }}>Bookings</Text>
+        <Text style={{ fontSize: 22 }}>Bookings</Text>
 
         <FlatList
           data={BookingsForUI}
@@ -272,18 +274,20 @@ const styles = StyleSheet.create({
   editButton: {
     backgroundColor: 'blue',
     padding: 10,
-    borderRadius: 5,
+    borderRadius: 15,
     margin: 10,
+    marginTop:0
   },
   logoutButton: {
     backgroundColor: 'red',
     padding: 10,
-    borderRadius: 5,
+    borderRadius: 15,
     margin: 10,
+    marginTop:0
   },
   buttonText: {
     color: 'white',
-    fontSize: 16,
+    fontSize:19,
   },
   container1: {
     flex: 1,
@@ -324,6 +328,19 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#ddd',
   },
+  button: {
+   
+    backgroundColor: 'green',
+    paddingVertical: 10,
+    borderRadius: 15,
+    marginBottom:3,
+    alignItems:'center',
+    width:200
+    
+ 
+    
+  },
+
 });
 
 export default ProfileScreen;

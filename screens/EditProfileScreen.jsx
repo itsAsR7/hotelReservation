@@ -91,6 +91,7 @@ const EditProfileScreen = ({ route, navigation }) => {
 
   return (
     <View style={styles.container}>
+      <Text style={{fontSize:18,fontFamily:'serif', marginLeft:8}}>Name</Text>
       <TextInput
         style={styles.input}
         placeholder="Name"
@@ -98,6 +99,7 @@ const EditProfileScreen = ({ route, navigation }) => {
         onChangeText={(text) => setName(text)}
         fontSize={20}
       />
+      <Text style={{fontSize:18,fontFamily:'serif', marginLeft:8}}>Address</Text>
       <TextInput
         style={styles.input}
         placeholder="Address"
@@ -106,6 +108,7 @@ const EditProfileScreen = ({ route, navigation }) => {
         fontSize={20}
         
       />
+      <Text style={{fontSize:18,fontFamily:'serif', marginLeft:8}}>Age</Text>
       <TextInput
         style={styles.input}
         placeholder="Age"
@@ -114,6 +117,7 @@ const EditProfileScreen = ({ route, navigation }) => {
         keyboardType="numeric"
         fontSize={20}
       />
+      <Text style={{fontSize:18,fontFamily:'serif', marginLeft:8}}>Profession</Text>
       <TextInput
         style={styles.input}
         placeholder="Profession"
@@ -122,7 +126,7 @@ const EditProfileScreen = ({ route, navigation }) => {
         fontSize={20}
       />
       <TouchableOpacity style ={styles.button}title="Save Profile" onPress={handleSaveProfile}>
-        <Text style={styles.buttonText}>Save Profile</Text> 
+        <Text style={styles.buttonText}>Save Info</Text> 
       </TouchableOpacity>
     </View>
   );
@@ -158,7 +162,7 @@ const styles = StyleSheet.create({
 
   buttonText: {
     color: 'white',
-    fontSize: 30,
+    fontSize: 26,
     
   },
 });
