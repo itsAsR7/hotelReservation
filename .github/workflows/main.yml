@@ -15,29 +15,29 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v2
+      - name: Checkout Repository
+        uses: actions/checkout@v2
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: 16
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
 
-    - name: Install Expo CLI
-      run: npm install -g expo-cli
+      - name: Install Expo CLI
+        run: npm install -g expo-cli
 
-    - name: Install Dependencies
-      run: npm install
+      - name: Install Dependencies
+        run: npm install
 
-    - name: Install Dependencies
-      run: npm install --save react-native-gesture-handler react-native-reanimated react-native-screens      
+      - name: Install Dependencies
+        run: npm install --save react-native-gesture-handler react-native-reanimated react-native-screens
 
-    - name: Authenticate with EAS
-      run: expo login --username ${{ secrets.EXPO_USERNAME }} --password ${{ secrets.EXPO_PASSWORD }}
+      - name: Authenticate with EAS
+        run: expo login --username ${{ secrets.EXPO_USERNAME }} --password ${{ secrets.EXPO_PASSWORD }}
 
-    - name: Build with EAS
-      run: expo eas build --platform android
+      - name: Build with EAS
+        run: expo eas build --platform android
 
-    - name: Publish to App Store and Google Play
-      run: |
-        # add
+      - name: Publish to App Center
+        run: |
+          appcenter codepush release-react -a G7-QuickStay/QuickStay -d Production

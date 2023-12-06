@@ -1,5 +1,6 @@
 {
   "expo": {
+    "owner": "asr7",
     "name": "hotelReservation",
     "slug": "hotelReservation",
     "version": "1.0.0",
@@ -10,6 +11,11 @@
       "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
+    },
+    "config": {
+      "appSecret": {
+        "value": "33b1097c-86bd-41db-b48b-9d4118c69776"
+      }
     },
     "assetBundlePatterns": [
       "**/*"

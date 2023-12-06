@@ -1,0 +1,4 @@
+<resources>
+  <string name="app_name">hotelreservation</string>
+  <string moduleConfig="true" name="CodePushDeploymentKey">OrtSU5W43eK3didV9t4qkMsrtk3Kt2ySo_r96</string>
+</resources>
