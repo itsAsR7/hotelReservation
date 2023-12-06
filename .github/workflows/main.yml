@@ -38,6 +38,9 @@ jobs:
       - name: Build with EAS
         run: expo eas build --platform android
 
+      - name: Login to App Center
+        run: appcenter login --token ${{ secrets.APP_CENTER_ACCESS_TOKEN }}
+
       - name: Publish to App Center
         run: |
           appcenter codepush release-react -a G7-QuickStay/QuickStay -d Production
