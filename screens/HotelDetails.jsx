@@ -26,7 +26,7 @@ const HotelDetails = ({ route, navigation }) => {
   }, []);
 
   const handleBookNowPress = () => {
-    navigation.navigate('BookingScreen', {hotel});
+    navigation.navigate('Booking Screen', {hotel});
   };
 
   const checkIfFavorite = async () => {

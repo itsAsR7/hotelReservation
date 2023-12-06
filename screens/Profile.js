@@ -15,16 +15,25 @@ import HotelsList from '../components/HotelsList';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { FontAwesome } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { auth, db } from '../dbConfig';
+import { auth, db, storageRef,storage } from '../dbConfig';
 import {
-  getDoc,
-  doc,
+ 
   collection,
   query,
   where,
   getDocs,
 } from 'firebase/firestore';
+
+import {updateDoc, getDownloadURL } from "firebase/firestore";
 import * as ImagePicker from 'expo-image-picker';
+import {ref,uploadBytes, getStorage} from 'firebase/storage'
+
+
+import * as CryptoJS from 'crypto-js';
+import { getFirestore, doc, setDoc, getDoc } from 'firebase/firestore';
+
+
+
 
 const handleLogout = async () => {
   try {
@@ -37,9 +46,19 @@ const handleLogout = async () => {
   }
 };
 
-const ProfileScreen = () => {
+const ProfileScreen = ({ navigation }) => {
   const [BookingsForUI, setBookingsForUI] = useState([]);
   const [image, setImage] = useState(null);
+
+  const { userId } = auth.currentUser.email; // Correct
+  // Assuming you pass the userId as a parameter
+
+  const userIdHash = CryptoJS.SHA256(userId).toString(CryptoJS.enc.Hex);
+
+  const [name, setName] = useState('');
+  const [address, setAddress] = useState('');
+  const [age, setAge] = useState('');
+  const [profession, setProfession] = useState('');
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -53,9 +72,76 @@ const ProfileScreen = () => {
     console.log(result);
 
     if (!result.canceled) {
-      setImage(result.assets[0].uri);
+      setImage(result.uri);
+      const uri = result.uri;
+      console.log("********URI*********")
+      console.log(uri)
+
+
+      const storage =getStorage()
+      const aref =ref(storage,'image.jpg')
+
+      if (uri){
+
+      const img = await fetch(uri)
+      console.log("img",img)
+      const bytes = await img.blob()
+
+      console.log("blob",blob)
+
+      await uploadBytes(aref, bytes)
+    }
+
+      else{
+        console.log("cant fetch uri")
+      }
+
+
+    
+    }
+  }
+  
+
+
+  
+
+  const uploadImage = async() => {
+    if (image) {
+      const response = await fetch(image)
+      const blob = await response.blob()
+      const storage = getStorage(); // Creating a Storage instance
+      const storageRef = ref(storage, "images");
+  
+      uploadBytes(storageRef, blob).then((snapshot) => {
+        console.log("Uploaded file or blob");
+      }).catch((error) => {
+        console.log(error.message);
+      });
+    } else {
+      console.log("No image selected");
     }
   };
+
+  const loadUserData = async () => {
+    try {
+      const db = getFirestore();
+      const userDocRef = doc(db, 'users', userIdHash);
+      const userDocSnap = await getDoc(userDocRef);
+
+      if (userDocSnap.exists()) {
+        const userData = userDocSnap.data();
+        setName(userData.name || '');
+        setAddress(userData.address || '');
+        setAge(userData.age || '');
+        setProfession(userData.profession || '');
+      }
+    } catch (error) {
+      console.error('Error loading user data:', error);
+    }
+  };
+
+
+  
 
 
 
@@ -64,8 +150,12 @@ const ProfileScreen = () => {
       'Screen has loaded, attempting to get user profile for Profile.js'
     );
 
+    if (userIdHash) {
+      loadUserData();
+    }
+
     getUserProfile();
-  }, []);
+  }, [userIdHash]);
 
   const getUserProfile = async () => {
     const q = query(
@@ -93,12 +183,13 @@ const ProfileScreen = () => {
       <View style={styles.header}>
         <Image source={ image===null? require("../assets/profile.jpg") : {uri: image}} style={styles.profileImage} />
         <Button title="Pick an image from camera roll" onPress={pickImage} />
+        <Text style={styles.username}>{name}</Text>
         <Text style={styles.username}>{auth.currentUser.email}</Text>
         <Text style={styles.email}>{auth.currentUser.uid}</Text>
       </View>
-      <View style={styles.buttonContainer} onPress={getUserProfile}>
-        <TouchableOpacity style={styles.editButton}>
-          <Text style={styles.buttonText}>Reload Bookings</Text>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity style={styles.editButton} onPress={() => navigation.navigate('User Information')}>
+          <Text style={styles.buttonText}>Edit Profile</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
           <Text style={styles.buttonText}>Logout</Text>
