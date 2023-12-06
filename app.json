@@ -33,7 +33,8 @@
       "permissions": [
         "android.permission.RECORD_AUDIO"
       ],
-      "package": "com.asr7.hotelReservation"
+      "package": "com.asr7.hotelReservation",
+      "versionCode": 2
     },
     "web": {
       "favicon": "./assets/favicon.png"
