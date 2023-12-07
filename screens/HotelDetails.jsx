@@ -26,7 +26,7 @@ const HotelDetails = ({ route, navigation }) => {
   }, []);
 
   const handleBookNowPress = () => {
-    navigation.navigate('BookingScreen', {hotel});
+    navigation.navigate('Booking Screen', {hotel});
   };
 
   const checkIfFavorite = async () => {
@@ -65,9 +65,9 @@ const HotelDetails = ({ route, navigation }) => {
           left={20}
           right={20}
           titleText={hotel.hotel_name}
-          icon={'search'}
+         
           onPress={() => navigation.goBack()}
-          onPress1={() => navigation.navigate('Bottom')}
+          
         />
       </View>
       <View style={styles.container}>

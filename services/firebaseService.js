@@ -66,7 +66,7 @@ const getAllFavorites = async () => {
       return allFavorites;
     } catch (err) {
       console.log(`Error when getting all favorites: ${err}`);
-      return [];
+      return false;
     }
   };
   

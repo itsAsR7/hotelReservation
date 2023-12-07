@@ -10,7 +10,7 @@ import { collection, addDoc } from 'firebase/firestore';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-const BookingScreen = ({ route }) => {
+const BookingScreen = ({ route,navigation }) => {
   const { hotel } = route.params;
   const [numberOfPeople, setNumberOfPeople] = useState(1);
 
@@ -35,7 +35,6 @@ const BookingScreen = ({ route }) => {
     // Save to Firebase Realtime Database
     try {
 
-      const uid = auth.currentUser.uid;
       
       
       
@@ -80,8 +79,8 @@ const BookingScreen = ({ route }) => {
 
       
       <Text style ={{fontSize:30}}>{hotel.hotel_name}</Text>
-      <Text style ={{fontSize:30}}>{hotel.city}</Text>
-      <Text style ={{fontSize:30}}>{hotel.country}</Text>
+      <Text style ={{fontSize:30}}>{hotel.city}, {hotel.country}</Text>
+    
       <Text style ={{fontSize:30}}>${hotel.rates_from}</Text>
       
       </View>
@@ -94,6 +93,7 @@ const BookingScreen = ({ route }) => {
       </View>
 
       <Button title="Book Now" onPress={handleBookNow} />
+      <Button title="Check Out" onPress={() => navigation.navigate('Check Out')} />
     </View>
   );
 };
