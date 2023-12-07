@@ -1,7 +1,7 @@
 // BookingScreen.js
 
 import React, { useState } from 'react';
-import { Image, View, Text, TextInput, Button, StyleSheet,TouchableOpacity } from 'react-native';
+import { Image, View, Text, TextInput, Button, StyleSheet,TouchableOpacity,ScrollView } from 'react-native';
 import { Dimensions } from 'react-native';
 
 import { db, app, auth } from "../dbConfig"
@@ -61,6 +61,7 @@ const BookingScreen = ({ route, navigation }) => {
   };
 
   return (
+    <ScrollView>
     <View style={styles.container}>
 
 
@@ -101,6 +102,7 @@ const BookingScreen = ({ route, navigation }) => {
         <Text style={{ fontWeight: '600' }} >Check Out</Text>
       </TouchableOpacity>
     </View>
+    </ScrollView>
   );
 };
 
