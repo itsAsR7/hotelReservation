@@ -3,7 +3,6 @@
     "owner": "asr7",
     "name": "hotelReservation",
     "slug": "hotelReservation",
-    "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
