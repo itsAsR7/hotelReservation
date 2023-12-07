@@ -4,15 +4,16 @@ import { getAuth } from "firebase/auth";
 import { getStorage,ref, storageRef, uploadBytes, getDownloadURL} from "@firebase/storage"
 
 
+// Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyCvaFUEZT6AE2gRZwTFkCrLAgzv-m0g1_M",
-  authDomain: "hotelreservation-34451.firebaseapp.com",
-  projectId: "hotelreservation-34451",
-  storageBucket: "hotelreservation-34451.appspot.com",
-  messagingSenderId: "58565957981",
-  appId: "1:58565957981:web:0c500086b75f88464a30b4",
-  
+  apiKey: "AIzaSyDL-73g3oApdEF_J7msi2CyfVHxvfKVhGI",
+  authDomain: "hotelreservation-5e6dc.firebaseapp.com",
+  projectId: "hotelreservation-5e6dc",
+  storageBucket: "hotelreservation-5e6dc.appspot.com",
+  messagingSenderId: "408857447547",
+  appId: "1:408857447547:web:d641f11838e3a810a966de"
 };
+
 
 
 // Initialize Firebase
