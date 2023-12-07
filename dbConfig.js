@@ -5,12 +5,13 @@ import { getStorage,ref, storageRef, uploadBytes, getDownloadURL} from "@firebas
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAjAJBkD7SxvrSD1g8QS-e62e5dyh6JQeY",
-  authDomain: "hotelreservation-5bb37.firebaseapp.com",
-  projectId: "hotelreservation-5bb37",
-  storageBucket: "hotelreservation-5bb37.appspot.com",
-  messagingSenderId: "517486606704",
-  appId: "1:517486606704:web:d64c71e5223a2eae73b7b5"
+  apiKey: "AIzaSyCvaFUEZT6AE2gRZwTFkCrLAgzv-m0g1_M",
+  authDomain: "hotelreservation-34451.firebaseapp.com",
+  projectId: "hotelreservation-34451",
+  storageBucket: "hotelreservation-34451.appspot.com",
+  messagingSenderId: "58565957981",
+  appId: "1:58565957981:web:0c500086b75f88464a30b4",
+  
 };
 
 

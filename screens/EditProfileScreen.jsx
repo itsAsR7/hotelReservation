@@ -5,10 +5,10 @@ import { auth } from '../dbConfig';
 import * as CryptoJS from 'crypto-js';
 
 const EditProfileScreen = ({ route, navigation }) => {
-  const { userId } = auth.currentUser.email; // Correct
+  // const { userId } = auth.currentUser.uid; // Correct
   // Assuming you pass the userId as a parameter
 
-  const userIdHash = CryptoJS.SHA256(userId).toString(CryptoJS.enc.Hex);
+  const userIdHash = auth.currentUser.uid;
 
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
@@ -48,6 +48,7 @@ const EditProfileScreen = ({ route, navigation }) => {
     }
   
     try {
+      console.log(userIdHash)
       const db = getFirestore();
       const userDocRef = doc(db, 'users', userIdHash);
   

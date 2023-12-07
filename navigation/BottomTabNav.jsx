@@ -45,7 +45,7 @@ const BottomTabNav = () => {
             <Ionicons
               name="home"
               size={35}
-              color={focused ? 'red' : 'gray'}
+              color={focused ? 'green' : 'gray'}
             />
           ),
         }}
@@ -62,7 +62,7 @@ const BottomTabNav = () => {
             <Ionicons
               name="location"
               size={35}
-              color={focused ? 'red' : 'gray'}
+              color={focused ? 'navy' : 'gray'}
             />
           ),
         }}
@@ -90,7 +90,7 @@ const BottomTabNav = () => {
             <Ionicons
               name="person-circle"
               size={35}
-              color={focused ? 'red' : 'gray'}
+              color={focused ? 'orange' : 'gray'}
             />
           ),
         }}

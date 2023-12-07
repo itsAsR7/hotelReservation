@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+
+import { NavigationContainer, useFocusEffect } from '@react-navigation/native';
 import {
   KeyboardAvoidingView,
   ScrollView,
@@ -15,18 +17,18 @@ import HotelsList from '../components/HotelsList';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { FontAwesome } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { auth, db, storageRef,storage } from '../dbConfig';
+import { auth, db, storageRef, storage,ref,getDownloadURL } from '../dbConfig';
 import {
- 
+
   collection,
   query,
   where,
   getDocs,
 } from 'firebase/firestore';
 
-import {updateDoc, getDownloadURL } from "firebase/firestore";
+import { updateDoc} from "firebase/firestore";
 import * as ImagePicker from 'expo-image-picker';
-import {ref,uploadBytes, getStorage} from 'firebase/storage'
+import {uploadBytes, getStorage,list } from 'firebase/storage'
 
 
 import * as CryptoJS from 'crypto-js';
@@ -49,11 +51,15 @@ const handleLogout = async () => {
 const ProfileScreen = ({ navigation }) => {
   const [BookingsForUI, setBookingsForUI] = useState([]);
   const [image, setImage] = useState(null);
+  const [uri, setUri] = useState(null);
+  const[url,setUrl] =useState();
 
-  const { userId } = auth.currentUser.email; // Correct
+  // const { userId } = auth.currentUser.uid; // Correct
   // Assuming you pass the userId as a parameter
 
-  const userIdHash = CryptoJS.SHA256(userId).toString(CryptoJS.enc.Hex);
+  // const userIdHash = CryptoJS.SHA256(userId).toString(CryptoJS.enc.Hex);
+
+  const userIdHash = auth.currentUser.uid;
 
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
@@ -72,60 +78,56 @@ const ProfileScreen = ({ navigation }) => {
     console.log(result);
 
     if (!result.canceled) {
-      setImage(result.uri);
-      const uri = result.uri;
+      setImage(result.assets[0].uri);
+      const uri = result.assets[0].uri;
       console.log("********URI*********")
       console.log(uri)
 
-
-      const storage =getStorage()
-      const aref =ref(storage,'image.jpg')
-
-      if (uri){
-
-      const img = await fetch(uri)
-      console.log("img",img)
-      const bytes = await img.blob()
-
-      console.log("blob",blob)
-
-      await uploadBytes(aref, bytes)
-    }
-
-      else{
-        console.log("cant fetch uri")
-      }
+      uploadImage(uri)
+      setUri(uri)
 
 
-    
+
+
+
+
+
     }
   }
-  
 
 
-  
 
-  const uploadImage = async() => {
-    if (image) {
-      const response = await fetch(image)
-      const blob = await response.blob()
-      const storage = getStorage(); // Creating a Storage instance
-      const storageRef = ref(storage, "images");
-  
-      uploadBytes(storageRef, blob).then((snapshot) => {
-        console.log("Uploaded file or blob");
-      }).catch((error) => {
-        console.log(error.message);
+
+
+  const uploadImage = async (uri) => {
+    try {
+
+      const mountainImagesRef = ref(storage, `images/${auth.currentUser.uid}.jpg`)
+
+      const response = await fetch(uri);
+      const blob = await response.blob();
+      uploadBytes(mountainImagesRef, blob).then((snapshot) => {
+        console.log(snapshot.metadata)
+        console.log("Uploaded blob or file!")
+
       });
-    } else {
-      console.log("No image selected");
+      console.log(`hello ${name} here.`)
+      const downloadUrl = await getDownloadURL(mountainImagesRef);
+      setImage(downloadUrl)
+    } catch (error) {
+      console.log("Error uploading image", error)
+
     }
+
+
   };
 
   const loadUserData = async () => {
     try {
+      console.log(userIdHash)
       const db = getFirestore();
       const userDocRef = doc(db, 'users', userIdHash);
+
       const userDocSnap = await getDoc(userDocRef);
 
       if (userDocSnap.exists()) {
@@ -140,12 +142,55 @@ const ProfileScreen = ({ navigation }) => {
     }
   };
 
+ 
+
 
   
+
+  useFocusEffect(
+    React.useCallback(() => {
+      console.log('Screen was focused');
+      // Do something when the screen is focused
+
+      loadUserData();
+      getUserProfile();
+      loadImageFromStorage();
+     
+      
+      
+      return () => {
+        console.log('Screen was unfocused');
+        // Do something when the screen is unfocused
+        // Useful for cleanup functions
+
+      };
+    }, [])
+  );
+
+
+  const loadImageFromStorage = async () =>{
+
+    const storage = getStorage();
+    const reference =ref(storage,`images/${auth.currentUser.uid}.jpg`)
+    await getDownloadURL(reference).then((x)=>{
+
+      setImage(x);
+      console.log("X:",x)
+
+
+
+    })
+  }
+
+
 
 
 
   useEffect(() => {
+
+
+
+
     console.log(
       'Screen has loaded, attempting to get user profile for Profile.js'
     );
@@ -153,6 +198,8 @@ const ProfileScreen = ({ navigation }) => {
     if (userIdHash) {
       loadUserData();
     }
+
+    loadImageFromStorage();
 
     getUserProfile();
   }, [userIdHash]);
@@ -181,20 +228,20 @@ const ProfileScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Image source={ image===null? require("../assets/profile.jpg") : {uri: image}} style={styles.profileImage} />
+        <Image source={image === null ? require("../assets/profile.jpg") : { uri: image}} style={styles.profileImage} />
         <TouchableOpacity style={styles.button} onPress={pickImage}>
           <Text style={styles.buttonText}>Pick an Image</Text>
         </TouchableOpacity>
         <Text style={styles.username}>{name}</Text>
         <Text style={styles.username}>{auth.currentUser.email}</Text>
-        <Text style={styles.email}>{auth.currentUser.uid}</Text>
+        <Text style={styles.email}>Age:{age}</Text>
       </View>
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.editButton} onPress={() => navigation.navigate('User Information')}>
           <Text style={styles.buttonText}>Edit Profile</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
-          <Text style={styles.buttonText}>Logout</Text>
+        <TouchableOpacity style={styles.logoutButton} onPress={() => uploadImage(uri)}>
+          <Text style={styles.buttonText}>Save</Text>
         </TouchableOpacity>
       </View>
 
@@ -272,22 +319,22 @@ const styles = StyleSheet.create({
     marginTop: 0,
   },
   editButton: {
-    backgroundColor: 'blue',
+    backgroundColor: '#a7f7a1',
     padding: 10,
     borderRadius: 15,
     margin: 10,
-    marginTop:0
+    marginTop: 0
   },
   logoutButton: {
-    backgroundColor: 'red',
+    backgroundColor: '#fc9558',
     padding: 10,
     borderRadius: 15,
     margin: 10,
-    marginTop:0
+    marginTop: 0
   },
   buttonText: {
     color: 'white',
-    fontSize:19,
+    fontSize: 19,
   },
   container1: {
     flex: 1,
@@ -329,16 +376,16 @@ const styles = StyleSheet.create({
     borderBottomColor: '#ddd',
   },
   button: {
-   
+
     backgroundColor: 'green',
     paddingVertical: 10,
     borderRadius: 15,
-    marginBottom:3,
-    alignItems:'center',
-    width:200
-    
- 
-    
+    marginBottom: 3,
+    alignItems: 'center',
+    width: 200
+
+
+
   },
 
 });

@@ -9,17 +9,39 @@ import { auth } from '../dbConfig';
 import * as CryptoJS from 'crypto-js';
 import { getFirestore, doc, setDoc, getDoc } from 'firebase/firestore';
 
+import { NavigationContainer, useFocusEffect } from '@react-navigation/native';
+
 const SearchScreen = ({ navigation }) => {
 
-  const { userId } = auth.currentUser.email; // Correct
+  // const { userId } = auth.currentUser.email; // Correct
   // Assuming you pass the userId as a parameter
 
-  const userIdHash = CryptoJS.SHA256(userId).toString(CryptoJS.enc.Hex);
+  // const userIdHash = CryptoJS.SHA256(userId).toString(CryptoJS.enc.Hex);
+  const userIdHash = auth.currentUser.uid; 
 
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
   const [age, setAge] = useState('');
   const [profession, setProfession] = useState('');
+
+  useFocusEffect(
+    React.useCallback(() => {
+      console.log('Screen was focused');
+      // Do something when the screen is focused
+
+      loadUserData();
+      return () => {
+        console.log('Screen was unfocused');
+        // Do something when the screen is unfocused
+        // Useful for cleanup functions
+     
+      };
+    }, [])
+  );
+
+
+
+
 
   useEffect(() => {
     // Load existing user data if in edit mode

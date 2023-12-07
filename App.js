@@ -12,6 +12,7 @@ import HotelDetails from './screens/HotelDetails';
 import HotelList from './screens/HotelList';
 import Search from './screens/Search';
 import EditProfileScreen from "./screens/EditProfileScreen"
+import CheckoutPage from "./screens/CheckoutPage";
 import { auth } from "./dbConfig";
 import { Provider as PaperProvider, Menu, IconButton } from "react-native-paper";
 
@@ -115,6 +116,12 @@ function App() {
          <Stack.Screen
           name="User Information"
           component={EditProfileScreen}
+          options={{ headerShown:true}}
+        />
+
+        <Stack.Screen
+          name="Check Out"
+          component={CheckoutPage}
           options={{ headerShown:true}}
         />
 
