@@ -101,7 +101,7 @@ const CheckoutPage = ({ clientSecret }) => {
         }}
       />
 
-      <TouchableOpacity onPress={handlePayment} style={styles.button}>
+      <TouchableOpacity style={styles.button}>
         <Text style={{fontSize:24}}>Submit</Text>
       </TouchableOpacity>
     </View>
